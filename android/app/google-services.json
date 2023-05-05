@@ -1,18 +1,27 @@
 {
   "project_info": {
     "project_number": "326053636682",
+    "firebase_url": "https://nex1-d4611-default-rtdb.firebaseio.com",
     "project_id": "nex1-d4611",
     "storage_bucket": "nex1-d4611.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:326053636682:android:d69187f5fad65188b894b3",
+        "mobilesdk_app_id": "1:326053636682:android:86796dbb1d41d122b894b3",
         "android_client_info": {
-          "package_name": "com.example.nex_1"
+          "package_name": "com.example.skull"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "326053636682-63jrue5fu2j3k1u95eb4su5a4ijjaabk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.skull",
+            "certificate_hash": "5e7cc684e555c3d61b2e672c22aa9e14cd222b9d"
+          }
+        },
         {
           "client_id": "326053636682-1favc3lutjb7ogni6lae2rtr81a1nmcm.apps.googleusercontent.com",
           "client_type": 3

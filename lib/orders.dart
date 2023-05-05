@@ -77,16 +77,26 @@ class _OrdersState extends State<Orders> {
     "45 x 45",
     "50 x 50",
     "60 x 40",
-    "60 x 60"
+    "60 x 60",
   ];
 
   //all variables to get gsm from user
   String gsm = "Select GSM";
-  List<String> gsmList = ["70", "90", "120", "150", "200", "250", "300"];
+  List<String> gsmList = [
+    "Select GSM",
+    "70",
+    "90",
+    "120",
+    "150",
+    "200",
+    "250",
+    "300"
+  ];
 
   //all variables to get color from user
   String color = "Select color";
   List<String> colorList = [
+    "Select color",
     "Blue",
     "Yellow",
     "Red",
@@ -96,6 +106,9 @@ class _OrdersState extends State<Orders> {
   ];
 
   //all variables to store cart items in list
+  String selectedGSM = "";
+  String selectedColor = "";
+  int orders = 0;
   final TextEditingController width = TextEditingController();
   final TextEditingController height = TextEditingController();
   final TextEditingController quantity = TextEditingController();
@@ -110,15 +123,25 @@ class _OrdersState extends State<Orders> {
         textAlign: TextAlign.center,
         style: const TextStyle(
           fontFamily: 'Poppins',
-          fontSize: 15.0,
-          letterSpacing: 0.2,
-          fontWeight: FontWeight.w400,
+          fontSize: 13.0,
+          letterSpacing: 0.4,
+          fontWeight: FontWeight.w800,
           color: Colors.white,
         ),
       ),
       backgroundColor: Colors.black,
-      padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-      duration: const Duration(milliseconds: 800),
+      showCloseIcon: true,
+      closeIconColor: Colors.white,
+      padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      duration: const Duration(seconds: 1),
+      behavior: SnackBarBehavior.floating,
+      // action: SnackBarAction(
+      //   label: 'Hide',
+      //   onPressed: () {},
+      //   textColor: Colors.blue,
+      //   disabledTextColor: Colors.black,
+      // ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -214,6 +237,18 @@ class _OrdersState extends State<Orders> {
     sendOrder = "Order sent successfully";
   }
 
+  String whatSize() {
+    if (size == "") {
+      return sizeList[0];
+    } else {
+      return size;
+    }
+  }
+
+  void items() {
+    orders = (cartList.length) ~/ 4;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (size == 'Custom Size') {
@@ -255,11 +290,11 @@ class _OrdersState extends State<Orders> {
             children: [
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+                padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
                 child: const Center(
                   child: Image(
-                    image: AssetImage('images/logo.jpg'),
-                    height: 40.0,
+                    image: AssetImage('images/logo new stretch.png'),
+                    height: 150.0,
                   ),
                 ),
               ),
@@ -267,11 +302,15 @@ class _OrdersState extends State<Orders> {
                 height: 10,
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
+                margin: const EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.blue.shade700, Colors.blue.shade300]),
+                  gradient: LinearGradient(colors: [
+                    Colors.blue.shade800,
+                    Colors.blue.shade400,
+                    Colors.indigo.shade400,
+                    Colors.indigo.shade900
+                  ]),
                   borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(40.0),
                       bottomRight: Radius.circular(40.0),
@@ -289,8 +328,7 @@ class _OrdersState extends State<Orders> {
                           image: const AssetImage("images/user2.png"),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.05),
-                              BlendMode.dstATop),
+                              Colors.black.withOpacity(0.2), BlendMode.dstATop),
                         ),
                         color: Colors.white,
                         borderRadius: const BorderRadius.only(
@@ -309,61 +347,61 @@ class _OrdersState extends State<Orders> {
                                 fontFamily: 'Poppins',
                                 fontSize: 25.0,
                                 letterSpacing: 1.0,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w800,
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              '\n\nCustomer ID : \t\t$cNumber',
+                              '\n\nCustomer ID : \n$cNumber',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 17.0,
-                                overflow: TextOverflow.ellipsis,
+                                fontSize: 15.0,
+                                overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              '\nFirst Name : \t\t$fname',
+                              '\nFirst Name : \n$fname',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 17.0,
-                                overflow: TextOverflow.ellipsis,
+                                fontSize: 15.0,
+                                overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              '\nLast name : \t\t$lname',
+                              '\nLast name : \n$lname',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 17.0,
-                                overflow: TextOverflow.ellipsis,
+                                fontSize: 15.0,
+                                overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              '\nCompany : \t\t$cname',
+                              '\nCompany : \n$cname',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 17.0,
-                                overflow: TextOverflow.ellipsis,
+                                fontSize: 15.0,
+                                overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              '\nEmail : \t\t$email',
+                              '\nEmail : \n$email',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 17.0,
-                                overflow: TextOverflow.ellipsis,
+                                fontSize: 15.0,
+                                overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
@@ -413,9 +451,11 @@ class _OrdersState extends State<Orders> {
                         onChanged: (newText) {
                           setState(() {
                             gsm = newText!;
+                            gsmList.add(newText);
+                            selectedGSM = gsm;
                           });
                         },
-                        selectedItem: "70",
+                        selectedItem: selectedGSM,
                       ),
                     ),
 
@@ -460,15 +500,18 @@ class _OrdersState extends State<Orders> {
                         dropdownDecoratorProps: const DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
                             labelText: "Color",
-                            hintText: "Choose Color",
                           ),
                         ),
                         onChanged: (newText) {
-                          setState(() {
-                            color = newText!;
-                          });
+                          if (newText != "Select color") {
+                            setState(() {
+                              color = newText!;
+                              colorList.add(newText);
+                              selectedColor = color;
+                            });
+                          }
                         },
-                        selectedItem: "Blue",
+                        selectedItem: selectedColor,
                       ),
                     ),
 
@@ -511,23 +554,22 @@ class _OrdersState extends State<Orders> {
                             bottomLeft: Radius.circular(20.0)),
                       ),
                       child: DropdownSearch<String>(
-                        popupProps: PopupProps.menu(
+                        popupProps: const PopupProps.menu(
                           showSelectedItems: true,
-                          disabledItemFn: (String s) => s.startsWith('I'),
                         ),
-                        items: gsmList,
+                        items: sizeList,
                         dropdownDecoratorProps: const DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
                             labelText: "Size",
-                            hintText: "Choose size",
                           ),
                         ),
                         onChanged: (newText) {
                           setState(() {
                             size = newText!;
+                            sizeList.add(newText);
                           });
                         },
-                        selectedItem: size,
+                        selectedItem: whatSize(),
                       ),
                     ),
 
@@ -589,14 +631,6 @@ class _OrdersState extends State<Orders> {
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                 ),
-                                hintText: 'Width',
-                                hintStyle: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 15.0,
-                                  letterSpacing: 1.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black54,
-                                ),
                               ),
                             ),
                           ),
@@ -616,7 +650,9 @@ class _OrdersState extends State<Orders> {
                                   String width_ = width.text;
                                   String height_ = height.text;
                                   sizeList.add('$width_ x $height_');
-                                  size = '$width_ x $height_';
+                                  setState(() {
+                                    size = '$width_ x $height_';
+                                  });
                                 });
                               },
                               cursorColor: Colors.black,
@@ -640,14 +676,6 @@ class _OrdersState extends State<Orders> {
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                 ),
-                                hintText: 'Height',
-                                hintStyle: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 15.0,
-                                  letterSpacing: 1.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black54,
-                                ),
                               ),
                             ),
                           ),
@@ -663,7 +691,6 @@ class _OrdersState extends State<Orders> {
                       margin: const EdgeInsets.only(left: 20, right: 20),
                       child: TextField(
                         controller: quantity,
-                        textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
@@ -688,14 +715,6 @@ class _OrdersState extends State<Orders> {
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
                           ),
-                          hintText: 'Quantity',
-                          hintStyle: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 15.0,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black54,
-                          ),
                         ),
                       ),
                     ),
@@ -719,10 +738,6 @@ class _OrdersState extends State<Orders> {
                           color: Colors.white,
                         ),
                       ),
-                    ),
-
-                    const SizedBox(
-                      height: 15,
                     ),
 
                     // GestureDetector(
@@ -762,31 +777,41 @@ class _OrdersState extends State<Orders> {
                     //   ),
                     // ),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
                     GestureDetector(
-                      onTap: () async {
+                      onTap: () {
                         sendOrder = ". . . .";
                         dispMessage();
-
-                        if (size != "null" &&
-                            gsm != "" &&
-                            color != "" &&
+                        if (size != "Select a size or search" &&
+                            gsm != "Select GSM" &&
+                            color != "Select color" &&
                             quantity.text != "" &&
                             quantity.text != "0") {
                           sendOrder = "Adding to cart...";
                           dispMessage();
-                          cartList.add(gsm);
-                          cartList.add(color);
-                          cartList.add(size);
-                          cartList.add(quantity.text);
-                          print(cartList);
-                          Future.delayed(const Duration(milliseconds: 500), () {
+                          setState(() {
+                            cartList.add(gsm);
+                            cartList.add(color);
+                            cartList.add(size);
+                            cartList.add(quantity.text);
+                            print(cartList);
+                          });
+                          Future.delayed(const Duration(milliseconds: 200), () {
                             sendOrder = "Added to cart";
                             dispMessage();
-                            size = "";
-                            quantity.text = "";
+                            setState(() {
+                              gsm = gsmList[0];
+                              selectedGSM = "";
+                              color = colorList[0];
+                              selectedColor = "";
+                              size = sizeList[0];
+                              quantity.text = "";
+                              items();
+                            });
                           });
+                          print(cartList);
+                          print("\n\n");
                         } else {
                           sendOrder = "Field(s) cannot be empty!";
                           dispMessage();
@@ -821,13 +846,17 @@ class _OrdersState extends State<Orders> {
                       onTap: () async {
                         sendOrder = "Clearing fields...";
                         dispMessage();
-                        Future.delayed(const Duration(milliseconds: 500), () {
-                          size = "Select a size or search";
-                          gsm = "";
-                          color = "";
-                          quantity.text = "";
-                          sendOrder = "Fields cleared";
+                        Future.delayed(const Duration(milliseconds: 10), () {
+                          sendOrder = "Fields cleared!";
                           dispMessage();
+                          Future.delayed(const Duration(milliseconds: 500), () {
+                            gsm = gsmList[0];
+                            selectedGSM = "";
+                            color = colorList[0];
+                            selectedColor = "";
+                            size = sizeList[0];
+                            quantity.text = "";
+                          });
                         });
                       },
                       child: SizedBox(
@@ -835,7 +864,7 @@ class _OrdersState extends State<Orders> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.red[600],
+                          color: Colors.red[300],
                           elevation: 10,
                           child: const Center(
                             child: Text(
@@ -844,7 +873,7 @@ class _OrdersState extends State<Orders> {
                                 fontFamily: 'Poppins',
                                 fontSize: 15.0,
                                 letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
@@ -853,7 +882,7 @@ class _OrdersState extends State<Orders> {
                       ),
                     ),
                     const SizedBox(
-                      height: 20.0,
+                      height: 15.0,
                     ),
 
                     GestureDetector(
@@ -870,29 +899,54 @@ class _OrdersState extends State<Orders> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.green[600],
+                          color: Colors.green[800],
                           elevation: 10,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(60, 5, 30, 5),
+                                height: 55.0,
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  shadowColor: Colors.black,
+                                  color: Colors.red,
+                                  elevation: 10,
+                                  child: Container(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                    child: Text(
+                                      "$orders",
+                                      style: const TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 17.0,
+                                        letterSpacing: 0.5,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                               const Center(
                                 child: Text(
-                                  '\t\t\t\t\t\t VIEW CART',
+                                  'VIEW CART',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: 15.0,
                                     letterSpacing: 0.2,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w600,
                                     color: Colors.white,
                                   ),
                                 ),
                               ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pushNamed('/cart');
-                                  },
-                                  icon:
-                                      const Icon(Icons.shopping_cart_outlined)),
+                              // IconButton(
+                              //     onPressed: () {
+                              //       Navigator.of(context).pushNamed('/cart');
+                              //     },
+                              //     icon:
+                              //         const Icon(Icons.shopping_cart_outlined)),
                             ],
                           ),
                         ),
@@ -900,7 +954,7 @@ class _OrdersState extends State<Orders> {
                     ),
 
                     const SizedBox(
-                      height: 20.0,
+                      height: 30.0,
                     ),
                     GestureDetector(
                       onTap: () async {
@@ -912,28 +966,31 @@ class _OrdersState extends State<Orders> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.black,
+                          color: Colors.white,
                           elevation: 10,
                           child: const Center(
                             child: Text(
-                              'BACK TO CUSTOMER REGISTRATION',
+                              'BACK',
                               style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 15.0,
                                 letterSpacing: 0.2,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 40,
               ),
             ],
           ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import 'package:nex_1/orders.dart';
+import 'package:skull/orders.dart';
 
 late int cNumber;
 
@@ -276,11 +276,11 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                 child: const Center(
                   child: Image(
-                    image: AssetImage('images/logo.jpg'),
-                    height: 40.0,
+                    image: AssetImage('images/logo new stretch.png'),
+                    height: 180.0,
                   ),
                 ),
               ),
@@ -294,7 +294,14 @@ class _HomePageState extends State<HomePage> {
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.blue.shade200, Colors.blue.shade900]),
+                      colors: [
+                        Colors.blue.shade200,
+                        Colors.blue.shade500,
+                        Colors.pink.shade100,
+                        Colors.pink.shade300,
+                        Colors.orange.shade300,
+                        Colors.orange.shade500
+                      ]),
                   borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(40.0),
                       bottomRight: Radius.circular(40.0),
@@ -531,6 +538,14 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.black54,
                         ),
                       ),
+                      onEditingComplete: () async {
+                        setState(() {
+                          fetch = true;
+                          message = "...";
+                        });
+                        await isExists();
+                        fetch = false;
+                      },
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -591,7 +606,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 20.0,
+                      height: 10.0,
                     ),
                     GestureDetector(
                       //THIS BUTTON PUSHES DATA INTO DATABASE
@@ -606,7 +621,7 @@ class _HomePageState extends State<HomePage> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.black,
+                          color: Colors.blue.shade100,
                           elevation: 10,
                           child: const Center(
                             child: Text(
@@ -616,7 +631,7 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 15.0,
                                 letterSpacing: 0.2,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -641,7 +656,7 @@ class _HomePageState extends State<HomePage> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.white,
+                          color: Colors.blue.shade300,
                           elevation: 10,
                           child: const Center(
                             child: Text(
@@ -679,7 +694,7 @@ class _HomePageState extends State<HomePage> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.red[400],
+                          color: Colors.blue.shade600,
                           elevation: 10,
                           child: const Center(
                             child: Text(
@@ -689,7 +704,7 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 15.0,
                                 letterSpacing: 0.2,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -711,7 +726,7 @@ class _HomePageState extends State<HomePage> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.green[800],
+                          color: Colors.blue.shade900,
                           elevation: 10,
                           child: const Center(
                             child: Text(

@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.nex_1"
+        applicationId "com.example.skull"
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -59,6 +59,10 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "Skull Company.apk"
+            }}
 }
 
 flutter {

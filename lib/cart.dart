@@ -1,7 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:nex_1/orders.dart';
-
+import 'package:skull/orders.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -9,7 +8,6 @@ class Cart extends StatefulWidget {
   @override
   State<Cart> createState() => _CartState();
 }
-
 
 class _CartState extends State<Cart> {
   //all methods and variables here
@@ -19,28 +17,27 @@ class _CartState extends State<Cart> {
   List<String> size_ = [];
   List<String> quantity_ = [];
 
-
   String date = "";
   String time = "";
   String printing = '';
   int sNo = 0;
 
-  void date_(){
-    DateTime dateToday =DateTime.now();
-    date = dateToday.toString().substring(0,10);
+  void date_() {
+    DateTime dateToday = DateTime.now();
+    date = dateToday.toString().substring(0, 10);
     String day = date.substring(8, 10);
     String month = date.substring(5, 7);
-    String year = date.substring(0,4);
+    String year = date.substring(0, 4);
     date = "$day/$month/$year";
-    time = dateToday.toString().substring(11,16);
+    time = dateToday.toString().substring(11, 16);
     time = time.replaceAll(":", "");
   }
 
-  void findSNo(){
-    sNo = ((cartList.length)/4).floor();
+  void findSNo() {
+    sNo = ((cartList.length) / 4).floor();
   }
 
-  void orderBuilder(){
+  void orderBuilder() {
     sno_ = [];
     gsm_ = [];
     color_ = [];
@@ -48,54 +45,54 @@ class _CartState extends State<Cart> {
     quantity_ = [];
     bool stillList = true;
     List<String> myList = List.from(cartList);
-    while(stillList){
-      if(sNo==0){
+    while (stillList) {
+      if (sNo == 0) {
         stillList = false;
       }
 
-      for(int i =0; i<sNo;i++){
+      List myList1 = myList;
+      for (int i = 0; i < sNo; i++) {
         String gsm = "";
         String color = "";
         String size = "";
         String quantity = "";
 
-        gsm = myList[0];
-        myList.remove(myList[0]);
+        gsm = myList1[0];
+        myList1.remove(myList1[0]);
 
-        color = myList[0];
-        myList.remove(myList[0]);
+        color = myList1[0];
+        myList1.remove(myList1[0]);
 
-        size = myList[0];
-        myList.remove(myList[0]);
+        size = myList1[0];
+        myList1.remove(myList1[0]);
 
-        quantity = myList[0];
-        myList.remove(myList[0]);
+        quantity = myList1[0];
+        myList1.remove(myList1[0]);
 
-        sno_.add((i+1).toString()+".");
+        sno_.add("${i + 1}.");
         gsm_.add(gsm);
         color_.add(color);
         size_.add(size);
         quantity_.add(quantity);
       }
-      if(myList.isEmpty){
+      if (myList1.isEmpty) {
         stillList = false;
       }
     }
-
   }
 
 // all functions to build the order table
 
-  Widget buildTable(){
+  Widget buildTable() {
     return DataTable(
       columnSpacing: 20,
       horizontalMargin: 10,
       showBottomBorder: true,
       headingTextStyle: const TextStyle(
         fontFamily: 'Poppins',
-        fontSize: 16.5,
-        letterSpacing: 0.0,
-        fontWeight: FontWeight.w600,
+        fontSize: 15.0,
+        letterSpacing: 0.9,
+        fontWeight: FontWeight.w800,
         color: Colors.black,
       ),
       dataTextStyle: const TextStyle(
@@ -115,44 +112,44 @@ class _CartState extends State<Cart> {
         DataColumn(label: Text('Size')),
         DataColumn(label: Text('Quantity')),
       ],
-      rows:
-        buildRow(),
+      rows: buildRow(),
     );
   }
 
   bool some = true;
-  List<DataRow> buildRow(){
+  List<DataRow> buildRow() {
     // List<DataRow> zeroList = [];
-    List<DataRow> zeroList = List<DataRow>.filled(sNo, const DataRow(cells: [DataCell(Text("")),]), growable: true);
+    List<DataRow> zeroList = List<DataRow>.filled(
+        sNo,
+        const DataRow(cells: [
+          DataCell(Text("")),
+        ]),
+        growable: true);
     int count = 1;
-    while(count<=sNo){
-      zeroList[count-1] = data();
-      count ++;
+    while (count <= sNo) {
+      zeroList[count - 1] = data();
+      count++;
     }
     return zeroList;
   }
 
-  DataRow data(){
-    return DataRow(
-        cells: [
-          buildCell(sno_),
-          buildCell(gsm_),
-          buildCell(color_),
-          buildCell(size_),
-          buildCell(quantity_),
-        ]
-    );
+  DataRow data() {
+    return DataRow(cells: [
+      buildCell(sno_),
+      buildCell(gsm_),
+      buildCell(color_),
+      buildCell(size_),
+      buildCell(quantity_),
+    ]);
   }
 
-  DataCell buildCell(x){
+  DataCell buildCell(x) {
     String txt = x[0];
     x.removeAt(0);
     return DataCell(Text(txt));
   }
 
-
   @override
-
   Widget build(BuildContext context) {
     date_();
     findSNo();
@@ -161,7 +158,7 @@ class _CartState extends State<Cart> {
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
 
-        if(!currentFocus.hasPrimaryFocus){
+        if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
       },
@@ -183,22 +180,23 @@ class _CartState extends State<Cart> {
           ),
         ),
         backgroundColor: Colors.white,
-
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
                 child: const Center(
                   child: Image(
-                    image: AssetImage('images/logo.jpg'),
-                    height: 40.0,
+                    image: AssetImage('images/logo new stretch.png'),
+                    height: 150.0,
                   ),
                 ),
               ),
-              const SizedBox(height: 15,),
+              const SizedBox(
+                height: 15,
+              ),
               Container(
                 margin: const EdgeInsets.only(left: 10, right: 10),
                 padding: const EdgeInsets.fromLTRB(10, 30, 10, 30),
@@ -206,7 +204,11 @@ class _CartState extends State<Cart> {
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.blue.shade300, Colors.blue.shade600,Colors.blue.shade800]),
+                      colors: [
+                        Colors.blue.shade300,
+                        Colors.blue.shade600,
+                        Colors.blue.shade800
+                      ]),
                   borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(40.0),
                       bottomRight: Radius.circular(40.0),
@@ -226,7 +228,7 @@ class _CartState extends State<Cart> {
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
                           ),
-                          speed: const Duration(milliseconds: 500),
+                          speed: const Duration(milliseconds: 300),
                         ),
                       ],
                       totalRepeatCount: 2,
@@ -235,7 +237,9 @@ class _CartState extends State<Cart> {
                       displayFullTextOnTap: true,
                       stopPauseOnTap: true,
                     ),
-                    const SizedBox(height: 35.0,),
+                    const SizedBox(
+                      height: 35.0,
+                    ),
                     Container(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                       decoration: const BoxDecoration(
@@ -253,39 +257,39 @@ class _CartState extends State<Cart> {
                           Container(
                             padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
                             width: 350,
-                            color: Colors.red.shade400,
+                            color: Colors.transparent,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const Text(
-                                  "Order no: 123",
+                                  "Order no: -",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: 25.0,
                                     letterSpacing: 0.2,
                                     fontWeight: FontWeight.w400,
-                                    color: Colors.black,
+                                    color: Colors.red,
                                   ),
                                 ),
                                 Text(
-                                  "\nDate:  $date",
+                                  "\nDate: $date",
                                   textAlign: TextAlign.right,
                                   style: const TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: 15.0,
-                                    letterSpacing: 0.2,
+                                    fontSize: 10.0,
+                                    letterSpacing: 0.1,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
                                 ),
                                 Text(
-                                  "Time:  $time Hours ",
+                                  "Time: $time Hours",
                                   textAlign: TextAlign.right,
                                   style: const TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: 15.0,
-                                    letterSpacing: 0.2,
+                                    fontSize: 10.0,
+                                    letterSpacing: 0.1,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
@@ -293,17 +297,15 @@ class _CartState extends State<Cart> {
                               ],
                             ),
                           ),
-                        buildTable()
+                          buildTable(),
                         ],
                       ),
                     ),
-
-
-                    const SizedBox(height: 20.0,),
-
+                    const SizedBox(
+                      height: 20.0,
+                    ),
                     GestureDetector(
-                      onTap: () async{
-                      },
+                      onTap: () async {},
                       child: SizedBox(
                         height: 45.0,
                         child: Material(
@@ -326,9 +328,11 @@ class _CartState extends State<Cart> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20.0,),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
                     GestureDetector(
-                      onTap: () async{
+                      onTap: () async {
                         Navigator.of(context).pop();
                       },
                       child: SizedBox(
@@ -353,9 +357,14 @@ class _CartState extends State<Cart> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15.0,),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
                   ],
                 ),
+              ),
+              const SizedBox(
+                height: 30.0,
               ),
             ],
           ),
