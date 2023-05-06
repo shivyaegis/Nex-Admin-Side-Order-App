@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Nex',
+      title: 'Skull',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Welcome To Nex'),
+      home: const MyHomePage(title: 'Welcome To Skull'),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) => const SignUpPage(),

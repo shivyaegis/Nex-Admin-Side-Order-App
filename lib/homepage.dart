@@ -153,7 +153,9 @@ class _HomePageState extends State<HomePage> {
 
       // if phone number exists then fetch details
 
-      if (databaseJSON.contains(phNo.text) && databaseJSON.contains(gst.text)) {
+      if ((databaseJSON.contains(phNo.text) &&
+              databaseJSON.contains(gst.text)) ||
+          databaseJSON.contains(phNo.text)) {
         int begin = 0;
         int end = 0;
         exist = true;
@@ -209,16 +211,15 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (exist == false) {
-      if (((fName.text != "" || lName.text != "") &&
-              phNo.text != "" &&
-              gst.text != "") &&
+      if ((fName.text != "" || lName.text != "") &&
+          (phNo.text != "" && gst.text != "") &&
           fetch == false) {
         createTable();
         valid = true;
         cNumber = i;
       } else if (fetch == true) {
         setState(() {
-          message = "Details imported";
+          message = "Details not available for this number";
           Future.delayed(const Duration(milliseconds: 2500), () {
             setState(() {
               message = "";

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'homepage.dart';
 
 List<String> cartList = [];
+int cNum = cNumber;
 
 class Orders extends StatefulWidget {
   const Orders({Key? key}) : super(key: key);
@@ -134,7 +135,7 @@ class _OrdersState extends State<Orders> {
       closeIconColor: Colors.white,
       padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 400),
       behavior: SnackBarBehavior.floating,
       // action: SnackBarAction(
       //   label: 'Hide',
@@ -192,34 +193,6 @@ class _OrdersState extends State<Orders> {
     });
   }
 
-  //method to give unique order number to customer
-  Future<void> orderNo() async {
-    sendOrder = "Getting order number...";
-    i = 1;
-    bool exist = true;
-    String databaseJSON = '';
-    while (exist && i < 100) {
-      sendOrder = "Referencing database...";
-      await ref
-          .child('customers')
-          .child(cNumber.toString())
-          .child('orders')
-          .child(i.toString())
-          .once()
-          .then((event) {
-        final dataSnapshot = event.snapshot;
-        setState(() {
-          databaseJSON = dataSnapshot.value.toString();
-        });
-        if (databaseJSON == "null") {
-          exist = false;
-        } else {
-          i++;
-        }
-      });
-    }
-  }
-
   //method to put order in table of customer
   Future<void> setOrder() async {
     sendOrder = "Updating tables...";
@@ -251,6 +224,7 @@ class _OrdersState extends State<Orders> {
 
   @override
   Widget build(BuildContext context) {
+    items();
     if (size == 'Custom Size') {
       customSize = true;
     } else {
@@ -417,7 +391,7 @@ class _OrdersState extends State<Orders> {
                         fontFamily: 'Poppins',
                         fontSize: 25.0,
                         letterSpacing: 1.0,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w900,
                         color: Colors.black,
                       ),
                     ),
@@ -440,6 +414,7 @@ class _OrdersState extends State<Orders> {
                       child: DropdownSearch<String>(
                         popupProps: const PopupProps.menu(
                           showSelectedItems: true,
+                          showSearchBox: true,
                         ),
                         items: gsmList,
                         dropdownDecoratorProps: const DropDownDecoratorProps(
@@ -451,7 +426,6 @@ class _OrdersState extends State<Orders> {
                         onChanged: (newText) {
                           setState(() {
                             gsm = newText!;
-                            gsmList.add(newText);
                             selectedGSM = gsm;
                           });
                         },
@@ -468,13 +442,13 @@ class _OrdersState extends State<Orders> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         gsm == "Select GSM" || gsm == ""
-                            ? 'GSM cannot be null\n'
+                            ? '*GSM cannot be null*\n'
                             : '',
                         style: const TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 15.0,
                           letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w900,
                           color: Colors.white,
                         ),
                       ),
@@ -506,7 +480,6 @@ class _OrdersState extends State<Orders> {
                           if (newText != "Select color") {
                             setState(() {
                               color = newText!;
-                              colorList.add(newText);
                               selectedColor = color;
                             });
                           }
@@ -524,13 +497,13 @@ class _OrdersState extends State<Orders> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         color == "Select color" || color == ""
-                            ? 'Color cannot be null\n'
+                            ? '*Color cannot be null*\n'
                             : '',
                         style: const TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 15.0,
                           letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w800,
                           color: Colors.white,
                         ),
                       ),
@@ -556,6 +529,7 @@ class _OrdersState extends State<Orders> {
                       child: DropdownSearch<String>(
                         popupProps: const PopupProps.menu(
                           showSelectedItems: true,
+                          showSearchBox: true,
                         ),
                         items: sizeList,
                         dropdownDecoratorProps: const DropDownDecoratorProps(
@@ -566,7 +540,9 @@ class _OrdersState extends State<Orders> {
                         onChanged: (newText) {
                           setState(() {
                             size = newText!;
-                            sizeList.add(newText);
+                            if (!sizeList.contains(newText)) {
+                              sizeList.add(newText);
+                            }
                           });
                         },
                         selectedItem: whatSize(),
@@ -582,15 +558,15 @@ class _OrdersState extends State<Orders> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         size == 'Select a size or search'
-                            ? 'Size cannot be null\n'
+                            ? '*Size cannot be null*\n'
                             : size == 'Custom Size'
-                                ? '\nEnter custom size'
+                                ? '\n--Enter custom size--'
                                 : '',
                         style: const TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 15.0,
                           letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w800,
                           color: Colors.white,
                         ),
                       ),
@@ -601,18 +577,21 @@ class _OrdersState extends State<Orders> {
                       visible: customSize,
                       child: Column(
                         children: [
+                          const SizedBox(
+                            height: 15.0,
+                          ),
                           Container(
-                            margin: const EdgeInsets.only(left: 20, right: 20),
+                            margin:
+                                const EdgeInsets.only(left: 100, right: 100),
                             child: TextField(
                               controller: width,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.number,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly
-                              ], // Onl
+                              ],
                               cursorColor: Colors.black,
                               enabled: customSize,
-                              // controller: _emailController,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderSide: const BorderSide(
@@ -635,10 +614,11 @@ class _OrdersState extends State<Orders> {
                             ),
                           ),
                           const SizedBox(
-                            height: 10,
+                            height: 25,
                           ),
                           Container(
-                            margin: const EdgeInsets.only(left: 20, right: 20),
+                            margin:
+                                const EdgeInsets.only(left: 100, right: 100),
                             child: TextField(
                               keyboardType: TextInputType.number,
                               inputFormatters: <TextInputFormatter>[
@@ -728,61 +708,22 @@ class _OrdersState extends State<Orders> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         quantity.text == "0" || quantity.text == ""
-                            ? 'Quantity cannot be null\n'
+                            ? '*Quantity cannot be null*\n'
                             : '',
                         style: const TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 15.0,
                           letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w800,
                           color: Colors.white,
                         ),
                       ),
                     ),
-
-                    // GestureDetector(
-                    //   onTap: () async{
-                    //     sendOrder = ". . . .";
-                    //     Future.delayed(const Duration(seconds: 1), () async {
-                    //       if(size!= "null" && gsm!="" && color!="" && quantity.text!="" && quantity.text!="0"){
-                    //         sendOrder = "Preparing order...";
-                    //         await orderNo();
-                    //         setOrder();
-                    //       }
-                    //       else{
-                    //         sendOrder = "Field(s) cannot be empty!";
-                    //       }
-                    //     });
-                    //   },
-                    //   child: SizedBox(
-                    //     height: 45.0,
-                    //     child: Material(
-                    //       borderRadius: BorderRadius.circular(20.0),
-                    //       shadowColor: Colors.black,
-                    //       color: Colors.black,
-                    //       elevation: 10,
-                    //       child: const Center(
-                    //         child: Text(
-                    //           'SEND ORDER',
-                    //           style: TextStyle(
-                    //             fontFamily: 'Poppins',
-                    //             fontSize: 15.0,
-                    //             letterSpacing: 0.2,
-                    //             fontWeight: FontWeight.w400,
-                    //             color: Colors.white,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     const SizedBox(
                       height: 10,
                     ),
                     GestureDetector(
                       onTap: () {
-                        sendOrder = ". . . .";
-                        dispMessage();
                         if (size != "Select a size or search" &&
                             gsm != "Select GSM" &&
                             color != "Select color" &&
@@ -795,23 +736,23 @@ class _OrdersState extends State<Orders> {
                             cartList.add(color);
                             cartList.add(size);
                             cartList.add(quantity.text);
-                            print(cartList);
+                            // print(cartList);
                           });
-                          Future.delayed(const Duration(milliseconds: 200), () {
+                          Future.delayed(const Duration(milliseconds: 100), () {
                             sendOrder = "Added to cart";
                             dispMessage();
-                            setState(() {
-                              gsm = gsmList[0];
-                              selectedGSM = "";
-                              color = colorList[0];
-                              selectedColor = "";
-                              size = sizeList[0];
-                              quantity.text = "";
-                              items();
+                            Future.delayed(const Duration(seconds: 3), () {
+                              setState(() {
+                                gsm = gsmList[0];
+                                selectedGSM = "";
+                                color = colorList[0];
+                                selectedColor = "";
+                                size = sizeList[0];
+                                quantity.text = "";
+                                items();
+                              });
                             });
                           });
-                          print(cartList);
-                          print("\n\n");
                         } else {
                           sendOrder = "Field(s) cannot be empty!";
                           dispMessage();
@@ -844,12 +785,10 @@ class _OrdersState extends State<Orders> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        sendOrder = "Clearing fields...";
-                        dispMessage();
                         Future.delayed(const Duration(milliseconds: 10), () {
                           sendOrder = "Fields cleared!";
                           dispMessage();
-                          Future.delayed(const Duration(milliseconds: 500), () {
+                          Future.delayed(const Duration(seconds: 1), () {
                             gsm = gsmList[0];
                             selectedGSM = "";
                             color = colorList[0];
@@ -890,7 +829,7 @@ class _OrdersState extends State<Orders> {
                         if (cartList.isNotEmpty) {
                           Navigator.of(context).pushNamed('/cart');
                         } else {
-                          sendOrder = "Cart is empty";
+                          sendOrder = "Cart is empty!";
                           dispMessage();
                         }
                       },
@@ -902,11 +841,10 @@ class _OrdersState extends State<Orders> {
                           color: Colors.green[800],
                           elevation: 10,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                padding:
-                                    const EdgeInsets.fromLTRB(60, 5, 30, 5),
+                                padding: const EdgeInsets.fromLTRB(0, 5, 10, 5),
                                 height: 55.0,
                                 child: Material(
                                   borderRadius: BorderRadius.circular(10.0),
@@ -915,7 +853,7 @@ class _OrdersState extends State<Orders> {
                                   elevation: 10,
                                   child: Container(
                                     padding:
-                                        const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                        const EdgeInsets.fromLTRB(15, 5, 15, 5),
                                     child: Text(
                                       "$orders",
                                       style: const TextStyle(
@@ -941,12 +879,12 @@ class _OrdersState extends State<Orders> {
                                   ),
                                 ),
                               ),
-                              // IconButton(
-                              //     onPressed: () {
-                              //       Navigator.of(context).pushNamed('/cart');
-                              //     },
-                              //     icon:
-                              //         const Icon(Icons.shopping_cart_outlined)),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed('/cart');
+                                  },
+                                  icon:
+                                      const Icon(Icons.shopping_cart_outlined)),
                             ],
                           ),
                         ),
@@ -964,9 +902,9 @@ class _OrdersState extends State<Orders> {
                       child: SizedBox(
                         height: 45.0,
                         child: Material(
+                          type: MaterialType.transparency,
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.white,
                           elevation: 10,
                           child: const Center(
                             child: Text(
@@ -975,7 +913,7 @@ class _OrdersState extends State<Orders> {
                                 fontFamily: 'Poppins',
                                 fontSize: 15.0,
                                 letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w900,
                                 color: Colors.black,
                               ),
                             ),

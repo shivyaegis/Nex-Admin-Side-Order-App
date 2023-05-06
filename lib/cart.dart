@@ -1,6 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:skull/orders.dart';
+
+int cNumber_ = cNum;
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -17,10 +20,16 @@ class _CartState extends State<Cart> {
   List<String> size_ = [];
   List<String> quantity_ = [];
 
+  //initialise database
+  final DatabaseReference ref = FirebaseDatabase.instance.ref();
+  String databaseJSON = '';
+
   String date = "";
   String time = "";
+
   String printing = '';
   int sNo = 0;
+  int i = 1;
 
   void date_() {
     DateTime dateToday = DateTime.now();
@@ -28,9 +37,11 @@ class _CartState extends State<Cart> {
     String day = date.substring(8, 10);
     String month = date.substring(5, 7);
     String year = date.substring(0, 4);
-    date = "$day/$month/$year";
-    time = dateToday.toString().substring(11, 16);
-    time = time.replaceAll(":", "");
+    setState(() {
+      date = "$day/$month/$year";
+      time = dateToday.toString().substring(11, 16);
+      time = time.replaceAll(":", "");
+    });
   }
 
   void findSNo() {
@@ -49,45 +60,34 @@ class _CartState extends State<Cart> {
       if (sNo == 0) {
         stillList = false;
       }
-
-      List myList1 = myList;
       for (int i = 0; i < sNo; i++) {
         String gsm = "";
         String color = "";
         String size = "";
         String quantity = "";
-
-        gsm = myList1[0];
-        myList1.remove(myList1[0]);
-
-        color = myList1[0];
-        myList1.remove(myList1[0]);
-
-        size = myList1[0];
-        myList1.remove(myList1[0]);
-
-        quantity = myList1[0];
-        myList1.remove(myList1[0]);
-
+        gsm = myList[(i * 4) + 0];
+        color = myList[(i * 4) + 1];
+        size = myList[(i * 4) + 2];
+        quantity = myList[(i * 4) + 3];
         sno_.add("${i + 1}.");
         gsm_.add(gsm);
         color_.add(color);
         size_.add(size);
         quantity_.add(quantity);
       }
-      if (myList1.isEmpty) {
-        stillList = false;
-      }
+      stillList = false;
     }
   }
 
 // all functions to build the order table
 
   Widget buildTable() {
+    orderBuilder();
     return DataTable(
-      columnSpacing: 20,
+      columnSpacing: 30,
       horizontalMargin: 10,
       showBottomBorder: true,
+      dividerThickness: 5.0,
       headingTextStyle: const TextStyle(
         fontFamily: 'Poppins',
         fontSize: 15.0,
@@ -97,12 +97,12 @@ class _CartState extends State<Cart> {
       ),
       dataTextStyle: const TextStyle(
         fontFamily: 'Poppins',
-        fontSize: 15.0,
+        fontSize: 13.0,
         letterSpacing: 0.0,
         fontWeight: FontWeight.w400,
         color: Colors.black,
       ),
-      sortColumnIndex: 2,
+      sortColumnIndex: 1,
       dataRowHeight: 55,
       sortAscending: true,
       columns: const [
@@ -116,7 +116,6 @@ class _CartState extends State<Cart> {
     );
   }
 
-  bool some = true;
   List<DataRow> buildRow() {
     // List<DataRow> zeroList = [];
     List<DataRow> zeroList = List<DataRow>.filled(
@@ -149,15 +148,64 @@ class _CartState extends State<Cart> {
     return DataCell(Text(txt));
   }
 
-  @override
-  Widget build(BuildContext context) {
+  //method to give unique order number to customer
+  Future<void> orderNo() async {
+    // sendOrder = "Getting order number...";
+    String databaseJSON = '';
+    // sendOrder = "Referencing database...";
+    await ref
+        .child('customers')
+        .child(cNumber_.toString())
+        .child('orders')
+        .child(i.toString())
+        .once()
+        .then((event) {
+      final dataSnapshot = event.snapshot;
+      setState(() {
+        databaseJSON = dataSnapshot.value.toString();
+      });
+      if (databaseJSON == "null") {
+      } else {
+        setState(() {
+          i = i + 1;
+        });
+        // print("checking order part $i");
+      }
+    });
+  }
+
+  //method to put order in table of customer
+  Future<void> setOrder(gsm, color, quantity, size) async {
+    // sendOrder = "Updating tables...";
+    await ref
+        .child("customers")
+        .child(cNumber_.toString())
+        .child('orders')
+        .child(i.toString())
+        .set({
+      "Order Date": date,
+      "Order Time": time,
+      "Order Number": i,
+      "GSM": gsm,
+      "Color": color,
+      "Quantity": quantity,
+      "Size": size,
+    });
+    // sendOrder = "Order sent successfully";
+  }
+
+  void update() {
     date_();
     findSNo();
-    orderBuilder();
+    orderNo();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    update();
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
@@ -205,9 +253,12 @@ class _CartState extends State<Cart> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.blue.shade300,
+                        Colors.blue.shade800,
                         Colors.blue.shade600,
-                        Colors.blue.shade800
+                        Colors.blue.shade300,
+                        Colors.lightBlue.shade600,
+                        Colors.lightBlue.shade400,
+                        Colors.lightBlue.shade100,
                       ]),
                   borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(40.0),
@@ -256,20 +307,19 @@ class _CartState extends State<Cart> {
                         children: [
                           Container(
                             padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
-                            width: 350,
-                            color: Colors.transparent,
+                            color: Colors.white,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                const Text(
-                                  "Order no: -",
+                                Text(
+                                  "No of orders -> ${i - 1}",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     fontSize: 25.0,
                                     letterSpacing: 0.2,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.red,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.pink.shade300,
                                   ),
                                 ),
                                 Text(
@@ -277,7 +327,7 @@ class _CartState extends State<Cart> {
                                   textAlign: TextAlign.right,
                                   style: const TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: 10.0,
+                                    fontSize: 12.0,
                                     letterSpacing: 0.1,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
@@ -288,7 +338,7 @@ class _CartState extends State<Cart> {
                                   textAlign: TextAlign.right,
                                   style: const TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: 10.0,
+                                    fontSize: 12.0,
                                     letterSpacing: 0.1,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
@@ -305,13 +355,27 @@ class _CartState extends State<Cart> {
                       height: 20.0,
                     ),
                     GestureDetector(
-                      onTap: () async {},
+                      onTap: () async {
+                        // sendOrder = "Preparing order...";
+                        // update();
+                        for (int j = 0; j < sNo; j++) {
+                          String gsm = "";
+                          String color = "";
+                          String size = "";
+                          String quantity = "";
+                          gsm = cartList[(j * 4) + 0];
+                          color = cartList[(j * 4) + 1];
+                          size = cartList[(j * 4) + 2];
+                          quantity = cartList[(j * 4) + 3];
+                          await setOrder(gsm, color, quantity, size);
+                        }
+                      },
                       child: SizedBox(
                         height: 45.0,
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.green,
+                          color: Colors.pink.shade700,
                           elevation: 10,
                           child: const Center(
                             child: Text(
@@ -333,6 +397,9 @@ class _CartState extends State<Cart> {
                     ),
                     GestureDetector(
                       onTap: () async {
+                        setState(() {
+                          cartList = [];
+                        });
                         Navigator.of(context).pop();
                       },
                       child: SizedBox(
@@ -340,11 +407,11 @@ class _CartState extends State<Cart> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.black,
+                          color: Colors.pink.shade300,
                           elevation: 10,
                           child: const Center(
                             child: Text(
-                              'GO BACK',
+                              'CANCEL ORDER',
                               style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 15.0,
