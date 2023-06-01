@@ -71,6 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
               email: _emailController.text, password: _passwordController.text))
           .user as User;
       setState(() {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        currentFocus.unfocus();
         _success = 2;
         message = 'Successfully signed in $_userEmail';
         _userEmail = user.email.toString();
@@ -85,6 +87,8 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     } catch (e) {
       // Handle Errors here.
+      FocusScopeNode currentFocus = FocusScope.of(context);
+      currentFocus.unfocus();
       _passwordController.text = "";
       error = e.toString();
       int end = error.indexOf(']') + 2;
@@ -287,7 +291,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           _signIn();
                         },
                         text: "LOG IN",
-                        c: Colors.blue.shade700),
+                        c: Colors.black),
                     const SizedBox(
                       height: 20.0,
                     ),
@@ -296,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.of(context).pushNamed('/signup');
                         },
                         text: "SIGN UP",
-                        c: Colors.pink.shade700),
+                        c: Colors.black),
                     const SizedBox(
                       height: 10.0,
                     ),

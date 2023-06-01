@@ -1,10 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:skull/components/logo.dart';
 import 'package:skull/homepage.dart';
 import 'package:skull/orders.dart';
-
-int cNumber_ = cNumber;
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -156,7 +155,7 @@ class _CartState extends State<Cart> {
     // sendOrder = "Referencing database...";
     await ref
         .child('customers')
-        .child(cNumber_.toString())
+        .child(cNumber.toString())
         .child('orders')
         .child(i.toString())
         .once()
@@ -180,7 +179,7 @@ class _CartState extends State<Cart> {
     // sendOrder = "Updating tables...";
     await ref
         .child("customers")
-        .child(cNumber_.toString())
+        .child(cNumber.toString())
         .child('orders')
         .child(i.toString())
         .set({
@@ -233,18 +232,8 @@ class _CartState extends State<Cart> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: const Center(
-                  child: Image(
-                    image: AssetImage('images/logo new stretch.png'),
-                    height: 150.0,
-                  ),
-                ),
-              ),
               const SizedBox(
-                height: 15,
+                height: 20,
               ),
               Container(
                 margin: const EdgeInsets.only(left: 10, right: 10),
@@ -313,7 +302,7 @@ class _CartState extends State<Cart> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(
-                                  "No of orders -> ${i - 1}",
+                                  "Order number ${i - 1}",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
@@ -359,17 +348,19 @@ class _CartState extends State<Cart> {
                       onTap: () async {
                         // sendOrder = "Preparing order...";
                         // update();
-                        for (int j = 0; j < sNo; j++) {
+                        while (cartList.isNotEmpty) {
                           String gsm = "";
                           String color = "";
                           String size = "";
                           String quantity = "";
-                          gsm = cartList[(j * 4) + 0];
-                          color = cartList[(j * 4) + 1];
-                          size = cartList[(j * 4) + 2];
-                          quantity = cartList[(j * 4) + 3];
+                          gsm = cartList[0];
+                          color = cartList[1];
+                          size = cartList[2];
+                          quantity = cartList[3];
                           await setOrder(gsm, color, quantity, size);
+                          cartList.removeRange(0, 4);
                         }
+                        // cartList = [];
                       },
                       child: SizedBox(
                         height: 45.0,
@@ -433,7 +424,8 @@ class _CartState extends State<Cart> {
                         setState(() {
                           cartList = [];
                         });
-                        Navigator.of(context).pushNamed('/full list');
+                        Navigator.of(context)
+                            .pushReplacementNamed('/full list');
                       },
                       child: SizedBox(
                         height: 45.0,
@@ -466,6 +458,7 @@ class _CartState extends State<Cart> {
               const SizedBox(
                 height: 30.0,
               ),
+              const Logo(),
             ],
           ),
         ),

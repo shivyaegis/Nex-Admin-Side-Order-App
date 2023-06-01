@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/services.dart';
+import 'package:skull/components/logo.dart';
 
 import 'homepage.dart';
 
 List<String> cartList = [];
-int cNum = cNumber;
 
 class Orders extends StatefulWidget {
   const Orders({Key? key}) : super(key: key);
@@ -262,18 +262,8 @@ class _OrdersState extends State<Orders> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
-                child: const Center(
-                  child: Image(
-                    image: AssetImage('images/logo new stretch.png'),
-                    height: 150.0,
-                  ),
-                ),
-              ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               Container(
                 margin: const EdgeInsets.only(left: 10, right: 10),
@@ -295,20 +285,25 @@ class _OrdersState extends State<Orders> {
                   children: [
                     //DISPLAYING CUSTOMER INFORMATION
                     Container(
-                      margin: const EdgeInsets.only(left: 10, right: 10),
-                      padding: const EdgeInsets.fromLTRB(60, 70, 60, 90),
+                      margin:
+                          const EdgeInsets.only(left: 10, right: 10, top: 10),
+                      padding: const EdgeInsets.fromLTRB(60, 50, 60, 90),
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: const AssetImage("images/user2.png"),
-                          fit: BoxFit.cover,
+                          image: const AssetImage("images/bg1.png"),
+                          fit: BoxFit.fill,
                           colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.2), BlendMode.dstATop),
+                              Colors.black.withOpacity(0.3), BlendMode.dstATop),
                         ),
-                        color: Colors.white,
+                        gradient: LinearGradient(colors: [
+                          Colors.pink.shade100,
+                          Colors.pink.shade200,
+                          Colors.pink.shade400,
+                        ]),
                         borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(10.0),
-                            bottomRight: Radius.circular(200.0),
-                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(20.0),
+                            bottomRight: Radius.circular(20.0),
+                            topLeft: Radius.circular(20.0),
                             bottomLeft: Radius.circular(200.0)),
                       ),
                       child: Column(
@@ -319,7 +314,7 @@ class _OrdersState extends State<Orders> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 25.0,
+                                fontSize: 30.0,
                                 letterSpacing: 1.0,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.black,
@@ -330,7 +325,7 @@ class _OrdersState extends State<Orders> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 15.0,
+                                fontSize: 18.0,
                                 overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
@@ -341,7 +336,7 @@ class _OrdersState extends State<Orders> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 15.0,
+                                fontSize: 18.0,
                                 overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
@@ -352,7 +347,7 @@ class _OrdersState extends State<Orders> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 15.0,
+                                fontSize: 18.0,
                                 overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
@@ -363,7 +358,7 @@ class _OrdersState extends State<Orders> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 15.0,
+                                fontSize: 18.0,
                                 overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
@@ -374,7 +369,7 @@ class _OrdersState extends State<Orders> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 15.0,
+                                fontSize: 18.0,
                                 overflow: TextOverflow.clip,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
@@ -741,7 +736,7 @@ class _OrdersState extends State<Orders> {
                           Future.delayed(const Duration(milliseconds: 100), () {
                             sendOrder = "Added to cart";
                             dispMessage();
-                            Future.delayed(const Duration(seconds: 3), () {
+                            Future.delayed(const Duration(seconds: 1), () {
                               setState(() {
                                 gsm = gsmList[0];
                                 selectedGSM = "";
@@ -931,7 +926,11 @@ class _OrdersState extends State<Orders> {
                 ),
               ),
               const SizedBox(
-                height: 40,
+                height: 20,
+              ),
+              const Logo(),
+              const SizedBox(
+                height: 10,
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:skull/components/gesture_buttons.dart';
+import 'package:skull/components/logo.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -48,19 +49,21 @@ class _SignUpPageState extends State<SignUpPage> {
               email: _emailController.text, password: _passwordController.text))
           .user as User;
       setState(() {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        currentFocus.unfocus();
         _success = true;
         _userEmail = user.email.toString();
       });
       _signIn();
     } catch (e) {
       setState(() {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        currentFocus.unfocus();
         _passwordController.text = "";
         _success = false;
-        setState(() {
-          errormess = e.toString();
-          int end = errormess.indexOf(']') + 2;
-          errormess = errormess.replaceRange(0, end, '');
-        });
+        errormess = e.toString();
+        int end = errormess.indexOf(']') + 2;
+        errormess = errormess.replaceRange(0, end, '');
       });
     }
   }
@@ -81,16 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(0, 40, 0, 20),
-                child: const Center(
-                  child: Image(
-                    image: AssetImage('images/logo new stretch.png'),
-                    height: 180.0,
-                  ),
-                ),
-              ),
+              const Logo(),
               const SizedBox(
                 height: 25,
               ),
@@ -139,6 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 35.0,
                     ),
                     TextField(
+                      textInputAction: TextInputAction.next,
                       cursorColor: Colors.black,
                       controller: _emailController,
                       decoration: InputDecoration(
@@ -233,7 +228,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           _register();
                         },
                         text: "SIGN UP",
-                        c: Colors.blue.shade700),
+                        c: Colors.black),
                     const SizedBox(
                       height: 20.0,
                     ),
@@ -241,8 +236,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         onTap: () async {
                           Navigator.of(context).pop();
                         },
-                        text: "GO BACK",
-                        c: Colors.pink.shade700),
+                        text: "LOG IN",
+                        c: Colors.black),
                     const SizedBox(
                       height: 15.0,
                     ),

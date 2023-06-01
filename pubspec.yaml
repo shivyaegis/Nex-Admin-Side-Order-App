@@ -63,8 +63,7 @@ flutter:
   assets:
     - images/logo.png
     - images/logo new stretch.png
-    - images/user.png
-    - images/user2.png
+    - images/bg1.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

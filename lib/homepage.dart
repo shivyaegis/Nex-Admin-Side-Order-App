@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:skull/components/logo.dart';
 
 import 'package:skull/orders.dart';
 
@@ -115,6 +116,8 @@ class _HomePageState extends State<HomePage> {
     bool exist = true;
     String child = "";
     message = '. . . . .';
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    currentFocus.unfocus();
     while (exist && i < 100) {
       child = i.toString();
       await ref.child("customers").child(child).once().then((event) {
@@ -275,18 +278,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                child: const Center(
-                  child: Image(
-                    image: AssetImage('images/logo new stretch.png'),
-                    height: 180.0,
-                  ),
-                ),
-              ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20),
@@ -296,12 +289,19 @@ class _HomePageState extends State<HomePage> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.blue.shade200,
+                        Colors.blue.shade100,
+                        Colors.blue.shade300,
                         Colors.blue.shade500,
+                        Colors.blue.shade700,
+                        Colors.blue.shade500,
+                        Colors.blue.shade300,
+                        Colors.blue.shade100,
                         Colors.pink.shade100,
                         Colors.pink.shade300,
-                        Colors.orange.shade300,
-                        Colors.orange.shade500
+                        Colors.pink.shade500,
+                        Colors.pink.shade700,
+                        Colors.pink.shade900,
+                        Colors.grey.shade500,
                       ]),
                   borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(40.0),
@@ -539,14 +539,14 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.black54,
                         ),
                       ),
-                      onEditingComplete: () async {
-                        setState(() {
-                          fetch = true;
-                          message = "...";
-                        });
-                        await isExists();
-                        fetch = false;
-                      },
+                      // onEditingComplete: () async {
+                      //   setState(() {
+                      //     fetch = true;
+                      //     message = "...";
+                      //   });
+                      //   await isExists();
+                      //   fetch = false;
+                      // },
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -643,7 +643,7 @@ class _HomePageState extends State<HomePage> {
                       height: 20.0,
                     ),
                     GestureDetector(
-                      //THIS BUTTON PUSHES DATA INTO DATABASE
+                      //THIS BUTTON FETCHES DATA FROM DATABASE
                       onTap: () async {
                         setState(() {
                           fetch = true;
@@ -748,7 +748,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(
-                height: 30.0,
+                height: 10.0,
+              ),
+              const Logo(),
+              const SizedBox(
+                height: 10,
               ),
             ],
           ),

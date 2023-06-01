@@ -10,11 +10,11 @@ class Logo extends StatelessWidget {
     return Column(children: [
       Container(
         color: Colors.white,
-        padding: const EdgeInsets.fromLTRB(0, 40, 0, 20),
+        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
         child: const Center(
           child: Image(
             image: AssetImage('images/logo new stretch.png'),
-            height: 200.0,
+            height: 250.0,
           ),
         ),
       ),

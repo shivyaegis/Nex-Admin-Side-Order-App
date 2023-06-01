@@ -3,8 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:skull/homepage.dart';
 
-int cnn = cNumber;
-
 class ViewList extends StatefulWidget {
   const ViewList({Key? key}) : super(key: key);
 
@@ -38,28 +36,64 @@ class _ViewListState extends State<ViewList> {
       final dataSnapshot = event.snapshot;
       setState(() {
         databaseJSON = dataSnapshot.value.toString();
-        print(databaseJSON);
+        // print(databaseJSON);
         // print("");
       });
       if (databaseJSON == "null") {
         orderTrailer = ["No orders to display :/"];
         orderHeader = ["No orders to display :/"];
-      } else {
+      } else if (databaseJSON[1] == "n") {
         List<String> orders = [];
         List<String> temp = databaseJSON.split(", {");
-
+        // print("Going here omg");
         for (int i = 0; i < temp.length; i++) {
+          // print("---" * 10);
+          // print("Loop number $i");
           // print(temp[i]);
-          if (i + 1 < temp.length &&
-              temp[i][temp[i].length - 1] == "}" &&
-              i > 0) {
+          // print(temp[i][temp[i].length - 1]);
+          if (temp[i][0] == "[") {
+            // print("here");
+          } else if (temp[i][temp[i].length - 1] == "}") {
+            // print("here2");
             orders.add(temp[i].substring(0, temp[i].length - 1));
-          } else if (i + 1 >= temp.length &&
-              temp[i][temp[i].length - 1] == "]") {
+          } else if (temp[i][temp[i].length - 1] == "l") {
+            // print("here3");
+            orders.add(temp[i].substring(0, temp[i].indexOf("}")));
+          } else if (temp[i][temp[i].length - 1] == "]") {
+            // print("here4");
             orders.add(temp[i].substring(0, temp[i].length - 2));
           }
         }
-        print(orders);
+        // print("---" * 10);
+        // print(orders);
+        // print(orders.length);
+
+        for (int i = 0; i < orders.length; i++) {
+          orderHeader.add(
+              "${orders[i].substring(orders[i].indexOf("Order Date:"), orders[i].length)}\n");
+          orderTrailer.add(
+              "${orders[i].substring(0, orders[i].indexOf("Order Date:") - 2)}\n");
+        }
+        // print(orderHeader);
+        // print(orderTrailer);
+      } else {
+        List<String> orders = [];
+        List<String> temp = databaseJSON.split(": {");
+        for (int i = 0; i < temp.length; i++) {
+          // print("Loop number $i");
+          // print(temp[i]);
+          // print(temp[i][temp[i].length - 1]);
+
+          if (temp[i].length == 2) {
+            // print("Going here");
+          } else if (temp[i][temp[i].length - 1] == "}") {
+            orders.add(temp[i].substring(0, temp[i].length - 2));
+            // print("Going here 2----------");
+          } else if (temp[i][temp[i].length - 2] == " ") {
+            orders.add(temp[i].substring(0, temp[i].length - 4));
+            // print("Going here 3 -------------------");
+          }
+        }
         // print(orders.length);
 
         for (int i = 0; i < orders.length; i++) {
@@ -81,10 +115,10 @@ class _ViewListState extends State<ViewList> {
         child: Column(
           children: <Widget>[
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.airport_shuttle_rounded,
                 size: 30.0,
-                color: Colors.green.shade900,
+                color: Colors.black,
               ),
               title: Text(
                 heads[i],
@@ -115,8 +149,8 @@ class _ViewListState extends State<ViewList> {
               children: <Widget>[
                 const Divider(
                   height: 5.0,
-                  color: Colors.black,
-                  thickness: 2.0,
+                  color: Colors.grey,
+                  thickness: 1.0,
                 ),
                 TextButton(
                   child: const Text(
@@ -129,8 +163,9 @@ class _ViewListState extends State<ViewList> {
                       color: Colors.blue,
                     ),
                   ),
-                  onPressed: () {
-                    deleteEntry(i);
+                  onPressed: () async {
+                    await deleteEntry(heads[i][heads[i].length - 2]);
+                    await getOrders(cid.text);
                   },
                 ),
                 const SizedBox(width: 8),
@@ -147,14 +182,21 @@ class _ViewListState extends State<ViewList> {
     return cardList;
   }
 
-  Future<void> deleteEntry(int k) async {
+  Future<void> deleteEntry(String orderNumber) async {
+    // Your Firebase delete code here
+    // Use the orderNumber argument to determine which order to delete
+    // Example:
     try {
-      if (orderHeader[0] != "No orders to display :/") {
-        ref.child('customers').child("2").child('orders').child("2").remove();
-        print("done");
-      }
+      // print(orderNumber);
+      await ref
+          .child('customers')
+          .child(cid.text)
+          .child('orders')
+          .child(orderNumber)
+          .remove();
+      // print('Order $orderNumber deleted successfully.');
     } catch (e) {
-      print("Error deleting entry: $e");
+      print(e);
     }
   }
 
@@ -162,11 +204,7 @@ class _ViewListState extends State<ViewList> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          cid.text = cnn.toString();
-        });
         FocusScopeNode currentFocus = FocusScope.of(context);
-
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
@@ -241,6 +279,7 @@ class _ViewListState extends State<ViewList> {
                         labelText: ' Customer ID',
                         fillColor: Colors.white,
                         filled: true,
+                        hintText: "Recent Customer ID is: $cNumber",
                         labelStyle: const TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 20.0,
@@ -258,7 +297,7 @@ class _ViewListState extends State<ViewList> {
                       //THIS BUTTON PUSHES DATA INTO DATABASE
                       onTap: () async {
                         if (cid.text == "") {
-                          cid.text = cnn.toString();
+                          cid.text = cNumber.toString();
                         }
                         getOrders(cid.text);
                       },
@@ -267,7 +306,7 @@ class _ViewListState extends State<ViewList> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.blue.shade300,
+                          color: Colors.white,
                           elevation: 10,
                           child: const Center(
                             child: Text(
