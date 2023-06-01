@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:skull/components/message_display.dart';
+import 'package:skull/full%20list.dart';
 import 'package:skull/orders.dart';
 import 'package:skull/components/logo.dart';
 import 'package:skull/components/gesture_buttons.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/homepage': (BuildContext context) => const HomePage(),
         '/orders': (BuildContext context) => const Orders(),
         '/cart': (BuildContext context) => const Cart(),
+        '/full list': (BuildContext context) => const ViewList(),
       },
     );
   }

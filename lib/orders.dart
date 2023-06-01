@@ -831,6 +831,9 @@ class _OrdersState extends State<Orders> {
                         } else {
                           sendOrder = "Cart is empty!";
                           dispMessage();
+                          Future.delayed(const Duration(milliseconds: 100), () {
+                            Navigator.of(context).pushNamed('/cart');
+                          });
                         }
                       },
                       child: SizedBox(

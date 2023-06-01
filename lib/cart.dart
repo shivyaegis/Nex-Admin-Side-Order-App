@@ -1,9 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:skull/homepage.dart';
 import 'package:skull/orders.dart';
 
-int cNumber_ = cNum;
+int cNumber_ = cNumber;
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -375,7 +376,7 @@ class _CartState extends State<Cart> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.pink.shade700,
+                          color: Colors.pink.shade900,
                           elevation: 10,
                           child: const Center(
                             child: Text(
@@ -407,11 +408,43 @@ class _CartState extends State<Cart> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black,
-                          color: Colors.pink.shade300,
+                          color: Colors.pink.shade500,
                           elevation: 10,
                           child: const Center(
                             child: Text(
                               'CANCEL ORDER',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 15.0,
+                                letterSpacing: 0.2,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        setState(() {
+                          cartList = [];
+                        });
+                        Navigator.of(context).pushNamed('/full list');
+                      },
+                      child: SizedBox(
+                        height: 45.0,
+                        child: Material(
+                          borderRadius: BorderRadius.circular(20.0),
+                          shadowColor: Colors.black,
+                          color: Colors.pink.shade200,
+                          elevation: 10,
+                          child: const Center(
+                            child: Text(
+                              'VIEW ALL ORDERS',
                               style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 15.0,
