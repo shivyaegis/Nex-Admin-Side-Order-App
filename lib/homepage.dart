@@ -178,6 +178,11 @@ class _HomePageState extends State<HomePage> {
             end = snapshot_.indexOf('phone no') - 2;
             lName.text = snapshot_.substring(begin, end);
 
+            // setting phone number
+            begin = snapshot_.indexOf('phone no') + 10;
+            end = snapshot_.indexOf('gst') - 2;
+            phNo.text = snapshot_.substring(begin, end);
+
             // setting gst number
 
             begin = snapshot_.indexOf('gst') + 12;
@@ -219,7 +224,7 @@ class _HomePageState extends State<HomePage> {
           fetch == false) {
         createTable();
         valid = true;
-        cNumber = i;
+        cNumber = i - 1;
       } else if (fetch == true) {
         setState(() {
           message = "Details not available for this number";
