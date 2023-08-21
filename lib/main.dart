@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:skull/components/message_display.dart';
-import 'package:skull/full%20list.dart';
-import 'package:skull/orders.dart';
-import 'package:skull/components/logo.dart';
-import 'package:skull/components/gesture_buttons.dart';
+import 'package:nex/components/message_display.dart';
+import 'package:nex/full%20list.dart';
+import 'package:nex/orders.dart';
+import 'package:nex/components/logo.dart';
+import 'package:nex/components/gesture_buttons.dart';
 
 import 'cart.dart';
 import 'signup.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Skull',
+      title: 'Nex',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

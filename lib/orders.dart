@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/services.dart';
-import 'package:skull/components/logo.dart';
+import 'package:nex/components/logo.dart';
 
 import 'homepage.dart';
 
@@ -232,707 +232,701 @@ class _OrdersState extends State<Orders> {
     }
     getCustomerDetails();
 
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
 
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          toolbarOpacity: 1,
-          toolbarHeight: 50,
-          title: const Text(
-            'Orders',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 15.0,
-              letterSpacing: 0.2,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            centerTitle: true,
+            toolbarOpacity: 1,
+            toolbarHeight: 50,
+            title: const Text(
+              'Orders',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15.0,
+                letterSpacing: 0.2,
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 10),
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Colors.blue.shade800,
-                    Colors.blue.shade400,
-                    Colors.indigo.shade400,
-                    Colors.indigo.shade900
-                  ]),
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(40.0),
-                      bottomRight: Radius.circular(40.0),
-                      topLeft: Radius.circular(40.0),
-                      bottomLeft: Radius.circular(40.0)),
-                ),
-                child: Column(
-                  children: [
-                    //DISPLAYING CUSTOMER INFORMATION
-                    Container(
-                      margin:
-                          const EdgeInsets.only(left: 10, right: 10, top: 10),
-                      padding: const EdgeInsets.fromLTRB(60, 50, 60, 90),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: const AssetImage("images/bg1.png"),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                        ),
-                        gradient: LinearGradient(colors: [
-                          Colors.pink.shade100,
-                          Colors.pink.shade200,
-                          Colors.pink.shade400,
-                        ]),
-                        borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(20.0),
-                            bottomRight: Radius.circular(20.0),
-                            topLeft: Radius.circular(20.0),
-                            bottomLeft: Radius.circular(200.0)),
-                      ),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Customer Info',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 30.0,
-                                letterSpacing: 1.0,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              '\n\nCustomer ID : \n$cNumber',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 18.0,
-                                overflow: TextOverflow.clip,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              '\nFirst Name : \n$fname',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 18.0,
-                                overflow: TextOverflow.clip,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              '\nLast name : \n$lname',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 18.0,
-                                overflow: TextOverflow.clip,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              '\nCompany : \n$cname',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 18.0,
-                                overflow: TextOverflow.clip,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              '\nEmail : \n$email',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 18.0,
-                                overflow: TextOverflow.clip,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ]),
-                    ),
-                    const SizedBox(
-                      height: 35.0,
-                    ),
-                    const Text(
-                      'Orders',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 25.0,
-                        letterSpacing: 1.0,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-
-                    //OPTION TO SELECT GSM
-                    Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20),
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.0),
-                            bottomRight: Radius.circular(20.0),
-                            topLeft: Radius.circular(20.0),
-                            bottomLeft: Radius.circular(20.0)),
-                      ),
-                      child: DropdownSearch<String>(
-                        popupProps: const PopupProps.menu(
-                          showSelectedItems: true,
-                          showSearchBox: true,
-                        ),
-                        items: gsmList,
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "GSM",
-                            hintText: "Choose GSM",
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Logo(),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Colors.blue.shade800,
+                      Colors.blue.shade400,
+                      Colors.indigo.shade400,
+                      Colors.indigo.shade900
+                    ]),
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(40.0),
+                        bottomRight: Radius.circular(40.0),
+                        topLeft: Radius.circular(40.0),
+                        bottomLeft: Radius.circular(40.0)),
+                  ),
+                  child: Column(
+                    children: [
+                      //DISPLAYING CUSTOMER INFORMATION
+                      Container(
+                        margin:
+                            const EdgeInsets.only(left: 10, right: 10, top: 10),
+                        padding: const EdgeInsets.fromLTRB(60, 50, 60, 90),
+                        decoration: const BoxDecoration(
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                            image: AssetImage("images/bg1.jpg"),
+                            opacity: 0.2,
+                            fit: BoxFit.fill,
                           ),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20.0),
+                              bottomRight: Radius.circular(20.0),
+                              topLeft: Radius.circular(20.0),
+                              bottomLeft: Radius.circular(200.0)),
                         ),
-                        onChanged: (newText) {
-                          setState(() {
-                            gsm = newText!;
-                            selectedGSM = gsm;
-                          });
-                        },
-                        selectedItem: selectedGSM,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Customer Info',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 30.0,
+                                  letterSpacing: 1.0,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                '\n\nCustomer ID : \n$cNumber',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 18.0,
+                                  overflow: TextOverflow.clip,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                '\nFirst Name : \n$fname',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 18.0,
+                                  overflow: TextOverflow.clip,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                '\nLast name : \n$lname',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 18.0,
+                                  overflow: TextOverflow.clip,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                '\nCompany : \n$cname',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 18.0,
+                                  overflow: TextOverflow.clip,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                '\nEmail : \n$email',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 18.0,
+                                  overflow: TextOverflow.clip,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ]),
                       ),
-                    ),
-
-                    //CONSTRAINT MESSAGE FOR ABOVE CONTAINER
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        gsm == "Select GSM" || gsm == ""
-                            ? '*GSM cannot be null*\n'
-                            : '',
-                        style: const TextStyle(
+                      const SizedBox(
+                        height: 35.0,
+                      ),
+                      const Text(
+                        'Orders',
+                        style: TextStyle(
                           fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 0.2,
+                          fontSize: 25.0,
+                          letterSpacing: 1.0,
                           fontWeight: FontWeight.w900,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 15.0,
+                      ),
 
-                    //OPTION TO SELECT COLOR
-                    Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20),
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.0),
-                            bottomRight: Radius.circular(20.0),
-                            topLeft: Radius.circular(20.0),
-                            bottomLeft: Radius.circular(20.0)),
-                      ),
-                      child: DropdownSearch<String>(
-                        popupProps: const PopupProps.menu(
-                          showSelectedItems: true,
+                      //OPTION TO SELECT GSM
+                      Container(
+                        margin: const EdgeInsets.only(left: 20, right: 20),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20.0),
+                              bottomRight: Radius.circular(20.0),
+                              topLeft: Radius.circular(20.0),
+                              bottomLeft: Radius.circular(20.0)),
                         ),
-                        items: colorList,
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Color",
+                        child: DropdownSearch<String>(
+                          popupProps: const PopupProps.menu(
+                            showSelectedItems: true,
+                            showSearchBox: true,
                           ),
-                        ),
-                        onChanged: (newText) {
-                          if (newText != "Select color") {
+                          items: gsmList,
+                          dropdownDecoratorProps: const DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                              labelText: "GSM",
+                              hintText: "Choose GSM",
+                            ),
+                          ),
+                          onChanged: (newText) {
                             setState(() {
-                              color = newText!;
-                              selectedColor = color;
+                              gsm = newText!;
+                              selectedGSM = gsm;
                             });
-                          }
-                        },
-                        selectedItem: selectedColor,
-                      ),
-                    ),
-
-                    //CONSTRAINT MESSAGE FOR ABOVE CONTAINER
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        color == "Select color" || color == ""
-                            ? '*Color cannot be null*\n'
-                            : '',
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white,
+                          },
+                          selectedItem: selectedGSM,
                         ),
                       ),
-                    ),
 
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    //CONTAINER FOR SIZE OPTION SELECTION FOR ORDER
-
-                    Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20),
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20.0),
-                            bottomRight: Radius.circular(20.0),
-                            topLeft: Radius.circular(20.0),
-                            bottomLeft: Radius.circular(20.0)),
+                      //CONSTRAINT MESSAGE FOR ABOVE CONTAINER
+                      const SizedBox(
+                        height: 5,
                       ),
-                      child: DropdownSearch<String>(
-                        popupProps: const PopupProps.menu(
-                          showSelectedItems: true,
-                          showSearchBox: true,
-                        ),
-                        items: sizeList,
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Size",
-                          ),
-                        ),
-                        onChanged: (newText) {
-                          setState(() {
-                            size = newText!;
-                            if (!sizeList.contains(newText)) {
-                              sizeList.add(newText);
-                            }
-                          });
-                        },
-                        selectedItem: whatSize(),
-                      ),
-                    ),
-
-                    //CONSTRAINT MESSAGE FOR ABOVE CONTAINER
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        size == 'Select a size or search'
-                            ? '*Size cannot be null*\n'
-                            : size == 'Custom Size'
-                                ? '\n--Enter custom size--'
-                                : '',
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-
-                    //OPTION TO SELECT CUSTOM SIZE AND THEN PUTS IT INTO SIZE BOX
-                    Visibility(
-                      visible: customSize,
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 15.0,
-                          ),
-                          Container(
-                            margin:
-                                const EdgeInsets.only(left: 100, right: 100),
-                            child: TextField(
-                              controller: width,
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              cursorColor: Colors.black,
-                              enabled: customSize,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                    width: 10.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                labelText: 'Width',
-                                fillColor: Colors.white,
-                                filled: true,
-                                labelStyle: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 15.0,
-                                  letterSpacing: 0.2,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Container(
-                            margin:
-                                const EdgeInsets.only(left: 100, right: 100),
-                            child: TextField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ], // Onl
-                              controller: height,
-                              onSubmitted: (newText) {
-                                setState(() {
-                                  String width_ = width.text;
-                                  String height_ = height.text;
-                                  sizeList.add('$width_ x $height_');
-                                  setState(() {
-                                    size = '$width_ x $height_';
-                                  });
-                                });
-                              },
-                              cursorColor: Colors.black,
-                              enabled: customSize,
-                              // controller: _emailController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                    width: 10.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                labelText: 'Height',
-                                fillColor: Colors.white,
-                                filled: true,
-                                labelStyle: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 15.0,
-                                  letterSpacing: 0.2,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 35,
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //OPTION TO SELECT QUANTITY
-                    Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20),
-                      child: TextField(
-                        controller: quantity,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ], // Onl
-                        cursorColor: Colors.black,
-                        // controller: _emailController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 10.0,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          labelText: 'Quantity',
-                          fillColor: Colors.white,
-                          filled: true,
-                          labelStyle: const TextStyle(
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          gsm == "Select GSM" || gsm == ""
+                              ? '*GSM cannot be null*\n'
+                              : '',
+                          style: const TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 15.0,
                             letterSpacing: 0.2,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ),
 
-                    //CONSTRAINT MESSAGE FOR ABOVE CONTAINER
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        quantity.text == "0" || quantity.text == ""
-                            ? '*Quantity cannot be null*\n'
-                            : '',
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w800,
+                      //OPTION TO SELECT COLOR
+                      Container(
+                        margin: const EdgeInsets.only(left: 20, right: 20),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        decoration: const BoxDecoration(
                           color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20.0),
+                              bottomRight: Radius.circular(20.0),
+                              topLeft: Radius.circular(20.0),
+                              bottomLeft: Radius.circular(20.0)),
+                        ),
+                        child: DropdownSearch<String>(
+                          popupProps: const PopupProps.menu(
+                            showSelectedItems: true,
+                          ),
+                          items: colorList,
+                          dropdownDecoratorProps: const DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                              labelText: "Color",
+                            ),
+                          ),
+                          onChanged: (newText) {
+                            if (newText != "Select color") {
+                              setState(() {
+                                color = newText!;
+                                selectedColor = color;
+                              });
+                            }
+                          },
+                          selectedItem: selectedColor,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (size != "Select a size or search" &&
-                            gsm != "Select GSM" &&
-                            color != "Select color" &&
-                            quantity.text != "" &&
-                            quantity.text != "0") {
-                          sendOrder = "Adding to cart...";
-                          dispMessage();
-                          setState(() {
-                            cartList.add(gsm);
-                            cartList.add(color);
-                            cartList.add(size);
-                            cartList.add(quantity.text);
-                            // print(cartList);
-                          });
-                          Future.delayed(const Duration(milliseconds: 100), () {
-                            sendOrder = "Added to cart";
+
+                      //CONSTRAINT MESSAGE FOR ABOVE CONTAINER
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          color == "Select color" || color == ""
+                              ? '*Color cannot be null*\n'
+                              : '',
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      //CONTAINER FOR SIZE OPTION SELECTION FOR ORDER
+
+                      Container(
+                        margin: const EdgeInsets.only(left: 20, right: 20),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20.0),
+                              bottomRight: Radius.circular(20.0),
+                              topLeft: Radius.circular(20.0),
+                              bottomLeft: Radius.circular(20.0)),
+                        ),
+                        child: DropdownSearch<String>(
+                          popupProps: const PopupProps.menu(
+                            showSelectedItems: true,
+                            showSearchBox: true,
+                          ),
+                          items: sizeList,
+                          dropdownDecoratorProps: const DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                              labelText: "Size",
+                            ),
+                          ),
+                          onChanged: (newText) {
+                            setState(() {
+                              size = newText!;
+                              if (!sizeList.contains(newText)) {
+                                sizeList.add(newText);
+                              }
+                            });
+                          },
+                          selectedItem: whatSize(),
+                        ),
+                      ),
+
+                      //CONSTRAINT MESSAGE FOR ABOVE CONTAINER
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          size == 'Select a size or search'
+                              ? '*Size cannot be null*\n'
+                              : size == 'Custom Size'
+                                  ? '\n--Enter custom size--'
+                                  : '',
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+
+                      //OPTION TO SELECT CUSTOM SIZE AND THEN PUTS IT INTO SIZE BOX
+                      Visibility(
+                        visible: customSize,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 15.0,
+                            ),
+                            Container(
+                              margin:
+                                  const EdgeInsets.only(left: 100, right: 100),
+                              child: TextField(
+                                controller: width,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                cursorColor: Colors.black,
+                                enabled: customSize,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                      width: 10.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  labelText: 'Width',
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  labelStyle: const TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 15.0,
+                                    letterSpacing: 0.2,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            Container(
+                              margin:
+                                  const EdgeInsets.only(left: 100, right: 100),
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ], // Onl
+                                controller: height,
+                                onSubmitted: (newText) {
+                                  setState(() {
+                                    String width_ = width.text;
+                                    String height_ = height.text;
+                                    sizeList.add('$width_ x $height_');
+                                    setState(() {
+                                      size = '$width_ x $height_';
+                                    });
+                                  });
+                                },
+                                cursorColor: Colors.black,
+                                enabled: customSize,
+                                // controller: _emailController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                      width: 10.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  labelText: 'Height',
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  labelStyle: const TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 15.0,
+                                    letterSpacing: 0.2,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 35,
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      //OPTION TO SELECT QUANTITY
+                      Container(
+                        margin: const EdgeInsets.only(left: 20, right: 20),
+                        child: TextField(
+                          controller: quantity,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ], // Onl
+                          cursorColor: Colors.black,
+                          // controller: _emailController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                                width: 10.0,
+                              ),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            labelText: 'Quantity',
+                            fillColor: Colors.white,
+                            filled: true,
+                            labelStyle: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 15.0,
+                              letterSpacing: 0.2,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      //CONSTRAINT MESSAGE FOR ABOVE CONTAINER
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          quantity.text == "0" || quantity.text == ""
+                              ? '*Quantity cannot be null*\n'
+                              : '',
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (size != "Select a size or search" &&
+                              gsm != "Select GSM" &&
+                              color != "Select color" &&
+                              quantity.text != "" &&
+                              quantity.text != "0") {
+                            sendOrder = "Adding to cart...";
                             dispMessage();
-                            Future.delayed(const Duration(seconds: 1), () {
-                              setState(() {
-                                gsm = gsmList[0];
-                                selectedGSM = "";
-                                color = colorList[0];
-                                selectedColor = "";
-                                size = sizeList[0];
-                                quantity.text = "";
-                                items();
+                            setState(() {
+                              cartList.add(gsm);
+                              cartList.add(color);
+                              cartList.add(size);
+                              cartList.add(quantity.text);
+                              // print(cartList);
+                            });
+                            Future.delayed(const Duration(milliseconds: 100),
+                                () {
+                              sendOrder = "Added to cart";
+                              dispMessage();
+                              Future.delayed(const Duration(seconds: 1), () {
+                                setState(() {
+                                  gsm = gsmList[0];
+                                  selectedGSM = "";
+                                  color = colorList[0];
+                                  selectedColor = "";
+                                  size = sizeList[0];
+                                  quantity.text = "";
+                                  items();
+                                });
                               });
                             });
-                          });
-                        } else {
-                          sendOrder = "Field(s) cannot be empty!";
-                          dispMessage();
-                        }
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.black,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'ADD TO CART',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                          } else {
+                            sendOrder = "Field(s) cannot be empty!";
+                            dispMessage();
+                          }
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.black,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'ADD TO CART',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        Future.delayed(const Duration(milliseconds: 10), () {
-                          sendOrder = "Fields cleared!";
-                          dispMessage();
-                          Future.delayed(const Duration(seconds: 1), () {
-                            gsm = gsmList[0];
-                            selectedGSM = "";
-                            color = colorList[0];
-                            selectedColor = "";
-                            size = sizeList[0];
-                            quantity.text = "";
+                      const SizedBox(
+                        height: 15.0,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          Future.delayed(const Duration(milliseconds: 10), () {
+                            sendOrder = "Fields cleared!";
+                            dispMessage();
+                            Future.delayed(const Duration(seconds: 1), () {
+                              gsm = gsmList[0];
+                              selectedGSM = "";
+                              color = colorList[0];
+                              selectedColor = "";
+                              size = sizeList[0];
+                              quantity.text = "";
+                            });
                           });
-                        });
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.red[300],
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'CLEAR FIELDS',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.red[300],
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'CLEAR FIELDS',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
+                      const SizedBox(
+                        height: 15.0,
+                      ),
 
-                    GestureDetector(
-                      onTap: () async {
-                        if (cartList.isNotEmpty) {
-                          Navigator.of(context).pushNamed('/cart');
-                        } else {
-                          sendOrder = "Cart is empty!";
-                          dispMessage();
-                          Future.delayed(const Duration(milliseconds: 100), () {
+                      GestureDetector(
+                        onTap: () async {
+                          if (cartList.isNotEmpty) {
                             Navigator.of(context).pushNamed('/cart');
-                          });
-                        }
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.green[800],
-                          elevation: 10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.fromLTRB(0, 5, 10, 5),
-                                height: 55.0,
-                                child: Material(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  shadowColor: Colors.black,
-                                  color: Colors.red,
-                                  elevation: 10,
-                                  child: Container(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                                    child: Text(
-                                      "$orders",
-                                      style: const TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 17.0,
-                                        letterSpacing: 0.5,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
+                          } else {
+                            sendOrder = "Cart is empty!";
+                            dispMessage();
+                            Future.delayed(const Duration(milliseconds: 100),
+                                () {
+                              Navigator.of(context).pushNamed('/cart');
+                            });
+                          }
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.green[800],
+                            elevation: 10,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 5, 10, 5),
+                                  height: 55.0,
+                                  child: Material(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    shadowColor: Colors.black,
+                                    color: Colors.red,
+                                    elevation: 10,
+                                    child: Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15, 5, 15, 5),
+                                      child: Text(
+                                        "$orders",
+                                        style: const TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 17.0,
+                                          letterSpacing: 0.5,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              const Center(
-                                child: Text(
-                                  'VIEW CART',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 15.0,
-                                    letterSpacing: 0.2,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
+                                const Center(
+                                  child: Text(
+                                    'VIEW CART',
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 15.0,
+                                      letterSpacing: 0.2,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pushNamed('/cart');
-                                  },
-                                  icon:
-                                      const Icon(Icons.shopping_cart_outlined)),
-                            ],
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushNamed('/cart');
+                                    },
+                                    icon: const Icon(
+                                        Icons.shopping_cart_outlined)),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
 
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        cartList = [];
-                        Navigator.of(context).pop();
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'BACK',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
+                      const SizedBox(
+                        height: 30.0,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          cartList = [];
+                          Navigator.of(context).pop();
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            type: MaterialType.transparency,
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'BACK',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Logo(),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),

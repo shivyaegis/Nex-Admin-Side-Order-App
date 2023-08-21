@@ -2,9 +2,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:skull/components/logo.dart';
-
-import 'package:skull/orders.dart';
+import 'package:nex/components/logo.dart';
+import 'package:nex/orders.dart';
 
 late int cNumber;
 
@@ -253,513 +252,509 @@ class _HomePageState extends State<HomePage> {
     <String, WidgetBuilder>{
       '/orders': (BuildContext context) => const Orders(),
     };
-    return GestureDetector(
-      onTap: () {
-        // to hide keyboard when pressed elsewhere
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          toolbarOpacity: 1,
-          toolbarHeight: 50,
-          title: const Text(
-            'Customer Details',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 15.0,
-              letterSpacing: 0.2,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () {
+          // to hide keyboard when pressed elsewhere
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            centerTitle: true,
+            toolbarOpacity: 1,
+            toolbarHeight: 50,
+            title: const Text(
+              'Customer Details',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15.0,
+                letterSpacing: 0.2,
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.blue.shade100,
-                        Colors.blue.shade300,
-                        Colors.blue.shade500,
-                        Colors.blue.shade700,
-                        Colors.blue.shade500,
-                        Colors.blue.shade300,
-                        Colors.blue.shade100,
-                        Colors.pink.shade100,
-                        Colors.pink.shade300,
-                        Colors.pink.shade500,
-                        Colors.pink.shade700,
-                        Colors.pink.shade900,
-                        Colors.grey.shade500,
-                      ]),
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(40.0),
-                      bottomRight: Radius.circular(40.0),
-                      topLeft: Radius.circular(40.0),
-                      bottomLeft: Radius.circular(40.0)),
-                ),
-                child: Column(
-                  children: [
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          'Details',
-                          textStyle: const TextStyle(
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Logo(),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.blue.shade100,
+                          Colors.blue.shade300,
+                          Colors.blue.shade500,
+                          Colors.blue.shade700,
+                          Colors.blue.shade500,
+                          Colors.blue.shade300,
+                          Colors.blue.shade100,
+                          Colors.pink.shade100,
+                          Colors.pink.shade300,
+                          Colors.pink.shade500,
+                          Colors.pink.shade700,
+                          Colors.pink.shade900,
+                          Colors.grey.shade500,
+                        ]),
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(40.0),
+                        bottomRight: Radius.circular(40.0),
+                        topLeft: Radius.circular(40.0),
+                        bottomLeft: Radius.circular(40.0)),
+                  ),
+                  child: Column(
+                    children: [
+                      AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            'Details',
+                            textStyle: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 25.0,
+                              letterSpacing: 1.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                            speed: const Duration(milliseconds: 500),
+                          ),
+                        ],
+                        totalRepeatCount: 2,
+                        repeatForever: false,
+                        pause: const Duration(milliseconds: 3000),
+                        displayFullTextOnTap: true,
+                        stopPauseOnTap: true,
+                      ),
+                      const SizedBox(
+                        height: 45.0,
+                      ),
+                      TextField(
+                        textInputAction: TextInputAction.next,
+                        cursorColor: Colors.black,
+                        controller: fName,
+                        // controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.account_circle_outlined,
+                            size: 25.0,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 30.0,
+                            ),
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          labelText: ' First Name',
+                          fillColor: Colors.transparent,
+                          filled: true,
+                          labelStyle: const TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 25.0,
-                            letterSpacing: 1.0,
+                            fontSize: 20.0,
+                            letterSpacing: 0.2,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
                           ),
-                          speed: const Duration(milliseconds: 500),
-                        ),
-                      ],
-                      totalRepeatCount: 2,
-                      repeatForever: false,
-                      pause: const Duration(milliseconds: 3000),
-                      displayFullTextOnTap: true,
-                      stopPauseOnTap: true,
-                    ),
-                    const SizedBox(
-                      height: 45.0,
-                    ),
-                    TextField(
-                      textInputAction: TextInputAction.next,
-                      cursorColor: Colors.black,
-                      controller: fName,
-                      // controller: _emailController,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.account_circle_outlined,
-                          size: 25.0,
-                          color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 30.0,
+                          hintText: 'first name',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black54,
                           ),
-                          borderRadius: BorderRadius.circular(35.0),
-                        ),
-                        labelText: ' First Name',
-                        fillColor: Colors.transparent,
-                        filled: true,
-                        labelStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 20.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                        hintText: 'first name',
-                        hintStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black54,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      textInputAction: TextInputAction.next,
-                      controller: lName,
-                      cursorColor: Colors.black,
-                      // controller: _emailController,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.account_circle_outlined,
-                          size: 25.0,
-                          color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 30.0,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TextField(
+                        textInputAction: TextInputAction.next,
+                        controller: lName,
+                        cursorColor: Colors.black,
+                        // controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.account_circle_outlined,
+                            size: 25.0,
+                            color: Colors.black,
                           ),
-                          borderRadius: BorderRadius.circular(35.0),
-                        ),
-                        labelText: ' Last Name',
-                        fillColor: Colors.transparent,
-                        filled: true,
-                        labelStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 20.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                        hintText: 'last name',
-                        hintStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      textInputAction: TextInputAction.next,
-                      controller: cName,
-                      cursorColor: Colors.black,
-                      // controller: _emailController,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.house_siding,
-                          size: 25.0,
-                          color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 30.0,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 30.0,
+                            ),
+                            borderRadius: BorderRadius.circular(35.0),
                           ),
-                          borderRadius: BorderRadius.circular(35.0),
-                        ),
-                        labelText: ' Company Name',
-                        fillColor: Colors.transparent,
-                        filled: true,
-                        labelStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 20.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                        hintText: 'SAIL Pvt Limited',
-                        hintStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      textInputAction: TextInputAction.next,
-                      controller: gst,
-                      cursorColor: Colors.black,
-                      // controller: _emailController,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.import_contacts_sharp,
-                          size: 25.0,
-                          color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 30.0,
+                          labelText: ' Last Name',
+                          fillColor: Colors.transparent,
+                          filled: true,
+                          labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 20.0,
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
                           ),
-                          borderRadius: BorderRadius.circular(35.0),
-                        ),
-                        labelText: ' GST number',
-                        fillColor: Colors.transparent,
-                        filled: true,
-                        labelStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 20.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                        hintText: '22AAAAA0000A1Z5',
-                        hintStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      textInputAction: TextInputAction.next,
-                      controller: phNo,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ], // Only numbers can be entered
-                      cursorColor: Colors.black,
-                      // controller: _emailController,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.phone_outlined,
-                          size: 25.0,
-                          color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 30.0,
+                          hintText: 'last name',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black54,
                           ),
-                          borderRadius: BorderRadius.circular(35.0),
-                        ),
-                        labelText: ' Phone no',
-                        fillColor: Colors.transparent,
-                        filled: true,
-                        labelStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 20.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                        hintText: '1234567890',
-                        hintStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black54,
                         ),
                       ),
-                      // onEditingComplete: () async {
-                      //   setState(() {
-                      //     fetch = true;
-                      //     message = "...";
-                      //   });
-                      //   await isExists();
-                      //   fetch = false;
-                      // },
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextField(
-                      textInputAction: TextInputAction.done,
-                      controller: email,
-                      cursorColor: Colors.black,
-                      // controller: _emailController,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.mail_outline,
-                          size: 25.0,
-                          color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 30.0,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TextField(
+                        textInputAction: TextInputAction.next,
+                        controller: cName,
+                        cursorColor: Colors.black,
+                        // controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.house_siding,
+                            size: 25.0,
+                            color: Colors.black,
                           ),
-                          borderRadius: BorderRadius.circular(35.0),
-                        ),
-                        labelText: ' Email',
-                        fillColor: Colors.transparent,
-                        filled: true,
-                        labelStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 20.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                        hintText: 'username@gmail.com',
-                        hintStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15.0,
-                          letterSpacing: 1.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        message,
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 16.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 30.0,
+                            ),
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          labelText: ' Company Name',
+                          fillColor: Colors.transparent,
+                          filled: true,
+                          labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 20.0,
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                          hintText: 'SAIL Pvt Limited',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black54,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    GestureDetector(
-                      //THIS BUTTON PUSHES DATA INTO DATABASE
-                      onTap: () {
-                        setState(() {
-                          message = "...";
-                        });
-                        isExists();
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.blue.shade100,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'Register Customer',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TextField(
+                        textInputAction: TextInputAction.next,
+                        controller: gst,
+                        cursorColor: Colors.black,
+                        // controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.import_contacts_sharp,
+                            size: 25.0,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 30.0,
+                            ),
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          labelText: ' GST number',
+                          fillColor: Colors.transparent,
+                          filled: true,
+                          labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 20.0,
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                          hintText: '22AAAAA0000A1Z5',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TextField(
+                        textInputAction: TextInputAction.next,
+                        controller: phNo,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ], // Only numbers can be entered
+                        cursorColor: Colors.black,
+                        // controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.phone_outlined,
+                            size: 25.0,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 30.0,
+                            ),
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          labelText: ' Phone no',
+                          fillColor: Colors.transparent,
+                          filled: true,
+                          labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 20.0,
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                          hintText: '1234567890',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        // onEditingComplete: () async {
+                        //   setState(() {
+                        //     fetch = true;
+                        //     message = "...";
+                        //   });
+                        //   await isExists();
+                        //   fetch = false;
+                        // },
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TextField(
+                        textInputAction: TextInputAction.done,
+                        controller: email,
+                        cursorColor: Colors.black,
+                        // controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.mail_outline,
+                            size: 25.0,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 30.0,
+                            ),
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          labelText: ' Email',
+                          fillColor: Colors.transparent,
+                          filled: true,
+                          labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 20.0,
+                            letterSpacing: 0.2,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                          hintText: 'username@gmail.com',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 1.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          message,
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 16.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      GestureDetector(
+                        //THIS BUTTON PUSHES DATA INTO DATABASE
+                        onTap: () {
+                          setState(() {
+                            message = "...";
+                          });
+                          isExists();
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.blue.shade100,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'Register Customer',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    GestureDetector(
-                      //THIS BUTTON FETCHES DATA FROM DATABASE
-                      onTap: () async {
-                        setState(() {
-                          fetch = true;
-                          message = "...";
-                        });
-                        await isExists();
-                        fetch = false;
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.blue.shade300,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'Fetch Customer',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      GestureDetector(
+                        //THIS BUTTON FETCHES DATA FROM DATABASE
+                        onTap: () async {
+                          setState(() {
+                            fetch = true;
+                            message = "...";
+                          });
+                          await isExists();
+                          fetch = false;
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.blue.shade300,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'Fetch Customer',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    GestureDetector(
-                      //THIS BUTTON CLEARS FIELDS
-                      onTap: () {
-                        phNo.text = "";
-                        fName.text = "";
-                        lName.text = "";
-                        cName.text = "";
-                        gst.text = "";
-                        email.text = "";
-                        setState(() {
-                          message = "Fields cleared";
-                        });
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.blue.shade600,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'Clear Fields',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      GestureDetector(
+                        //THIS BUTTON CLEARS FIELDS
+                        onTap: () {
+                          phNo.text = "";
+                          fName.text = "";
+                          lName.text = "";
+                          cName.text = "";
+                          gst.text = "";
+                          email.text = "";
+                          setState(() {
+                            message = "Fields cleared";
+                          });
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.blue.shade600,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'Clear Fields',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          message = '. . .';
-                        });
-                        order();
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.blue.shade900,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'Continue to orders',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            message = '. . .';
+                          });
+                          order();
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.blue.shade900,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'Continue to orders',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              const Logo(),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+                const SizedBox(
+                  height: 10.0,
+                ),
+              ],
+            ),
           ),
         ),
       ),

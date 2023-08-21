@@ -1,9 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:skull/components/logo.dart';
-import 'package:skull/homepage.dart';
-import 'package:skull/orders.dart';
+import 'package:nex/components/logo.dart';
+import 'package:nex/homepage.dart';
+import 'package:nex/orders.dart';
 
 class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
@@ -19,6 +19,13 @@ class _CartState extends State<Cart> {
   List<String> color_ = [];
   List<String> size_ = [];
   List<String> quantity_ = [];
+  bool isdispose = false;
+
+  @override
+  void dispose() {
+    isdispose = true;
+    super.dispose();
+  }
 
   //initialise database
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
@@ -90,20 +97,19 @@ class _CartState extends State<Cart> {
       dividerThickness: 5.0,
       headingTextStyle: const TextStyle(
         fontFamily: 'Poppins',
-        fontSize: 15.0,
+        fontSize: 12.0,
         letterSpacing: 0.9,
         fontWeight: FontWeight.w800,
         color: Colors.black,
       ),
-      dataTextStyle: const TextStyle(
+      dataTextStyle: TextStyle(
         fontFamily: 'Poppins',
-        fontSize: 13.0,
+        fontSize: MediaQuery.of(context).size.width / (25 + 5),
         letterSpacing: 0.0,
         fontWeight: FontWeight.w400,
         color: Colors.black,
       ),
       sortColumnIndex: 1,
-      dataRowHeight: 55,
       sortAscending: true,
       columns: const [
         DataColumn(label: Text('Sno')),
@@ -161,14 +167,20 @@ class _CartState extends State<Cart> {
         .once()
         .then((event) {
       final dataSnapshot = event.snapshot;
-      setState(() {
-        databaseJSON = dataSnapshot.value.toString();
-      });
+      if (!isdispose) {
+        setState(() {
+          databaseJSON = dataSnapshot.value.toString();
+        });
+      }
+
       if (databaseJSON == "null") {
       } else {
-        setState(() {
-          i = i + 1;
-        });
+        if (!isdispose) {
+          setState(() {
+            i = i + 1;
+          });
+        }
+
         // print("checking order part $i");
       }
     });
@@ -195,271 +207,273 @@ class _CartState extends State<Cart> {
   }
 
   void update() {
-    date_();
-    findSNo();
-    orderNo();
+    if (!isdispose) {
+      date_();
+      findSNo();
+      orderNo();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     update();
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          toolbarOpacity: 1,
-          toolbarHeight: 50,
-          title: const Text(
-            'Your Cart',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 15.0,
-              letterSpacing: 0.2,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            centerTitle: true,
+            toolbarOpacity: 1,
+            toolbarHeight: 50,
+            title: const Text(
+              'Your Cart',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 15.0,
+                letterSpacing: 0.2,
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 10, right: 10),
-                padding: const EdgeInsets.fromLTRB(10, 30, 10, 30),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.blue.shade800,
-                        Colors.blue.shade600,
-                        Colors.blue.shade300,
-                        Colors.lightBlue.shade600,
-                        Colors.lightBlue.shade400,
-                        Colors.lightBlue.shade100,
-                      ]),
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(40.0),
-                      bottomRight: Radius.circular(40.0),
-                      topLeft: Radius.circular(40.0),
-                      bottomLeft: Radius.circular(40.0)),
-                ),
-                child: Column(
-                  children: [
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          'Cart',
-                          textStyle: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 30.0,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                          speed: const Duration(milliseconds: 300),
-                        ),
-                      ],
-                      totalRepeatCount: 2,
-                      repeatForever: false,
-                      pause: const Duration(milliseconds: 3000),
-                      displayFullTextOnTap: true,
-                      stopPauseOnTap: true,
-                    ),
-                    const SizedBox(
-                      height: 35.0,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10.0),
-                            bottomRight: Radius.circular(10.0),
-                            topLeft: Radius.circular(10.0),
-                            bottomLeft: Radius.circular(10.0)),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
-                            color: Colors.white,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Text(
-                                  "Order number ${i - 1}",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 25.0,
-                                    letterSpacing: 0.2,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.pink.shade300,
-                                  ),
-                                ),
-                                Text(
-                                  "\nDate: $date",
-                                  textAlign: TextAlign.right,
-                                  style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.1,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  "Time: $time Hours",
-                                  textAlign: TextAlign.right,
-                                  style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.1,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Logo(),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 30),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.blue.shade800,
+                          Colors.blue.shade600,
+                          Colors.blue.shade300,
+                          Colors.lightBlue.shade600,
+                          Colors.lightBlue.shade400,
+                          Colors.lightBlue.shade100,
+                        ]),
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(40.0),
+                        bottomRight: Radius.circular(40.0),
+                        topLeft: Radius.circular(40.0),
+                        bottomLeft: Radius.circular(40.0)),
+                  ),
+                  child: Column(
+                    children: [
+                      AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            'Cart',
+                            textStyle: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 30.0,
+                              letterSpacing: 1.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
                             ),
+                            speed: const Duration(milliseconds: 300),
                           ),
-                          buildTable(),
                         ],
+                        totalRepeatCount: 2,
+                        repeatForever: false,
+                        pause: const Duration(milliseconds: 3000),
+                        displayFullTextOnTap: true,
+                        stopPauseOnTap: true,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        // sendOrder = "Preparing order...";
-                        // update();
-                        while (cartList.isNotEmpty) {
-                          String gsm = "";
-                          String color = "";
-                          String size = "";
-                          String quantity = "";
-                          gsm = cartList[0];
-                          color = cartList[1];
-                          size = cartList[2];
-                          quantity = cartList[3];
-                          await setOrder(gsm, color, quantity, size);
-                          cartList.removeRange(0, 4);
-                        }
-                        // cartList = [];
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.pink.shade900,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'CONFIRM ORDER',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                      const SizedBox(
+                        height: 35.0,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        decoration: const BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10.0),
+                              bottomRight: Radius.circular(10.0),
+                              topLeft: Radius.circular(10.0),
+                              bottomLeft: Radius.circular(10.0)),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                              color: Colors.transparent,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    "Order number ${i - 1}",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 25.0,
+                                      letterSpacing: 0.2,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.pink.shade700,
+                                    ),
+                                  ),
+                                  Text(
+                                    "\nDate: $date",
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 12.0,
+                                      letterSpacing: 0.1,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Time: $time Hours",
+                                    textAlign: TextAlign.right,
+                                    style: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 12.0,
+                                      letterSpacing: 0.1,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            buildTable(),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          // sendOrder = "Preparing order...";
+                          // update();
+                          while (cartList.isNotEmpty) {
+                            String gsm = "";
+                            String color = "";
+                            String size = "";
+                            String quantity = "";
+                            gsm = cartList[0];
+                            color = cartList[1];
+                            size = cartList[2];
+                            quantity = cartList[3];
+                            await setOrder(gsm, color, quantity, size);
+                            cartList.removeRange(0, 4);
+                          }
+                          // cartList = [];
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.pink.shade900,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'CONFIRM ORDER',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        setState(() {
-                          cartList = [];
-                        });
-                        Navigator.of(context).pop();
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.pink.shade500,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'CANCEL ORDER',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          setState(() {
+                            cartList = [];
+                          });
+                          Navigator.of(context).pop();
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.pink.shade500,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'CANCEL ORDER',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        setState(() {
-                          cartList = [];
-                        });
-                        Navigator.of(context)
-                            .pushReplacementNamed('/full list');
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.pink.shade200,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'VIEW ALL ORDERS',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          setState(() {
+                            cartList = [];
+                          });
+                          Navigator.of(context)
+                              .pushReplacementNamed('/full list');
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.pink.shade200,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'VIEW ALL ORDERS',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 15.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 30.0,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 30.0,
-              ),
-              const Logo(),
-            ],
+                const SizedBox(
+                  height: 30.0,
+                ),
+              ],
+            ),
           ),
         ),
       ),

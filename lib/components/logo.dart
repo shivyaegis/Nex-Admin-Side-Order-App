@@ -7,13 +7,15 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
+        width: 200,
+        height: 150,
         color: Colors.white,
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
         child: const Center(
           child: Image(
-            image: AssetImage('images/logo new stretch.png'),
+            image: AssetImage('images/logo2.jpg'),
             height: 250.0,
           ),
         ),

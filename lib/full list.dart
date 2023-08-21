@@ -1,7 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:skull/homepage.dart';
+import 'package:nex/components/logo.dart';
+import 'package:nex/homepage.dart';
 
 class ViewList extends StatefulWidget {
   const ViewList({Key? key}) : super(key: key);
@@ -112,33 +113,33 @@ class _ViewListState extends State<ViewList> {
     List<Widget> cardList = [];
     for (int i = 0; i < heads.length; i++) {
       Card card = Card(
+        color: Colors.transparent,
         child: Column(
           children: <Widget>[
             ListTile(
               leading: const Icon(
                 Icons.airport_shuttle_rounded,
-                size: 30.0,
-                color: Colors.black,
+                size: 20.0,
+                color: Colors.blue,
               ),
               title: Text(
                 heads[i],
                 style: const TextStyle(
                   fontFamily: 'Poppins',
-                  fontSize: 15.0,
-                  letterSpacing: 1.0,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black,
-                ),
-              ),
-              tileColor: Colors.white,
-              subtitle: Text(
-                trails[i],
-                style: const TextStyle(
-                  fontFamily: 'Poppins',
                   fontSize: 13.0,
                   letterSpacing: 1.0,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
+              ),
+              subtitle: Text(
+                trails[i],
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 12.0,
+                  letterSpacing: 1.0,
                   fontWeight: FontWeight.w400,
-                  color: Colors.black87,
+                  color: Colors.white.withOpacity(0.5),
                 ),
               ),
               textColor: Colors.black,
@@ -209,155 +210,146 @@ class _ViewListState extends State<ViewList> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 100.0,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                padding: const EdgeInsets.fromLTRB(20, 50, 20, 30),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(255, 25, 2, 106),
-                        Color.fromARGB(255, 126, 64, 212),
-                      ]),
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(40.0),
-                      bottomRight: Radius.circular(40.0),
-                      topLeft: Radius.circular(40.0),
-                      bottomLeft: Radius.circular(40.0)),
-                ),
-                child: Column(
-                  children: [
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText(
-                          'Orders List',
-                          textStyle: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 25.0,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Logo(),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(255, 107, 68, 248),
+                          Color.fromARGB(255, 126, 64, 212),
+                        ]),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(40.0),
+                        bottomRight: Radius.circular(40.0),
+                        topLeft: Radius.circular(40.0),
+                        bottomLeft: Radius.circular(40.0)),
+                  ),
+                  child: Column(
+                    children: [
+                      AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            'Orders List',
+                            textStyle: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 25.0,
+                              letterSpacing: 1.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
+                            speed: const Duration(milliseconds: 300),
                           ),
-                          speed: const Duration(milliseconds: 300),
-                        ),
-                      ],
-                      totalRepeatCount: 2,
-                      repeatForever: false,
-                      pause: const Duration(milliseconds: 3000),
-                      displayFullTextOnTap: true,
-                      stopPauseOnTap: true,
-                    ),
-                    const SizedBox(
-                      height: 35.0,
-                    ),
-                    TextField(
-                      controller: cid,
-                      cursorColor: Colors.green,
-                      cursorWidth: 2.0,
-                      onSubmitted: (value) => getOrders(value),
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.person_2_outlined,
-                          size: 28.0,
-                          color: Colors.green,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Colors.green, width: 30.0),
-                          borderRadius: BorderRadius.circular(35.0),
-                        ),
-                        labelText: ' Customer ID',
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "Recent Customer ID is: $cNumber",
-                        labelStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 20.0,
-                          letterSpacing: 0.2,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
+                        ],
+                        totalRepeatCount: 2,
+                        repeatForever: false,
+                        pause: const Duration(milliseconds: 3000),
+                        displayFullTextOnTap: true,
+                        stopPauseOnTap: true,
                       ),
-                      obscureText: false,
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    GestureDetector(
-                      //THIS BUTTON PUSHES DATA INTO DATABASE
-                      onTap: () async {
-                        if (cid.text == "") {
-                          cid.text = cNumber.toString();
-                        }
-                        getOrders(cid.text);
-                      },
-                      child: SizedBox(
-                        height: 45.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.black,
-                          color: Colors.white,
-                          elevation: 10,
-                          child: const Center(
-                            child: Text(
-                              'Fetch Customer',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 15.0,
-                                letterSpacing: 0.2,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                      const SizedBox(
+                        height: 35.0,
+                      ),
+                      TextField(
+                        controller: cid,
+                        cursorColor: Colors.green,
+                        cursorWidth: 2.0,
+                        onSubmitted: (value) => getOrders(value),
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.person_2_outlined,
+                            size: 28.0,
+                            color: Colors.green,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.green, width: 30.0),
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          labelText: ' Customer ID',
+                          fillColor: Colors.white,
+                          filled: true,
+                          hintText: "Recent Customer ID is: $cNumber",
+                          labelStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            letterSpacing: 0.2,
+                            color: Colors.black,
+                          ),
+                        ),
+                        obscureText: false,
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      GestureDetector(
+                        //THIS BUTTON PUSHES DATA INTO DATABASE
+                        onTap: () async {
+                          if (cid.text == "") {
+                            cid.text = cNumber.toString();
+                          }
+                          getOrders(cid.text);
+                        },
+                        child: SizedBox(
+                          height: 45.0,
+                          child: Material(
+                            borderRadius: BorderRadius.circular(20.0),
+                            shadowColor: Colors.black,
+                            color: Colors.white,
+                            elevation: 10,
+                            child: const Center(
+                              child: Text(
+                                'Fetch Customer',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 13.0,
+                                  letterSpacing: 0.2,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(255, 53, 55, 182),
-                        Color.fromARGB(255, 232, 127, 253),
-                      ]),
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(40.0),
-                      bottomRight: Radius.circular(40.0),
-                      topLeft: Radius.circular(40.0),
-                      bottomLeft: Radius.circular(40.0)),
+                const SizedBox(
+                  height: 30,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: generateCardList(orderHeader, orderTrailer),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(255, 53, 55, 182),
+                          Color.fromARGB(255, 232, 127, 253),
+                        ]),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: generateCardList(orderHeader, orderTrailer),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-            ],
+                const SizedBox(
+                  height: 40,
+                ),
+              ],
+            ),
           ),
         ),
       ),

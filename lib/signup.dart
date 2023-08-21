@@ -1,8 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:skull/components/gesture_buttons.dart';
-import 'package:skull/components/logo.dart';
+import 'package:nex/components/gesture_buttons.dart';
+import 'package:nex/components/logo.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
