@@ -4,9 +4,9 @@ A sample order accepting project. This Project encapsulated the following main f
 
 ## 1. Login / Sign-up
 
-<img src="https://github.com/shivyaegis/Flutter_project/assets/103941351/f0a41eb1-0b7a-48ff-9bc0-6529d90b4529" width="250" height="600">
+<img src="https://github.com/shivyaegis/Nex-Admin-Side-Order-App/assets/103941351/99830591-dc8a-449a-9bcf-0181982b11e6" width="250" height="600">
 
-<img src="https://github.com/shivyaegis/Flutter_project/assets/103941351/42e89d01-b630-4f47-be42-a8607a94f604" width="250" height="600">
+<img src="https://github.com/shivyaegis/Nex-Admin-Side-Order-App/assets/103941351/d809cc60-9b6d-471a-b486-e9b287ac115c" width="250" height="600">
 
 
 
@@ -18,7 +18,7 @@ Sample:   Email = abc@gmail.com
 
 ## 2. Customer Details
 
-<img src="https://github.com/shivyaegis/Flutter_project/assets/103941351/4d4c45a5-38d3-4d21-819c-0ecb3a6da4c0" width="250" height="600">
+<img src="https://github.com/shivyaegis/Nex-Admin-Side-Order-App/assets/103941351/d305913d-ac4c-47f0-8153-476602833961" width="250" height="600">
 
 
 Customer details are input in the next screen from the login and sign-up page. There is an option to even import existing customer using their mobile number and gst while will be unique. In case no gst is provided it brings up the first registered customer with the given phone number. Thus we can fetch and register customers. A clear fields is given to Clear all the fields in case you get an unwanted entry. 
@@ -39,11 +39,9 @@ After this we go to orders which is step 3 and the customer ID is retrieved befo
 
 ## 3. Orders
 
-<img src="https://github.com/shivyaegis/Flutter_project/assets/103941351/152cf012-7813-4e1c-b530-2dd04dc2a387" width="250" height="600">
+<img src="https://github.com/shivyaegis/Nex-Admin-Side-Order-App/assets/103941351/e1cc0ccc-aada-4394-8087-3cc0ad48e418" width="250" height="600">
 
-<img src="https://github.com/shivyaegis/Flutter_project/assets/103941351/79fb53e5-da7d-42f0-b240-d444224b4bc0" width="250" height="600">
-
-
+<img src="https://github.com/shivyaegis/Nex-Admin-Side-Order-App/assets/103941351/ccb77fd6-dd63-4383-8012-6f30bfacb7b1" width="250" height="600">
 
 This contains a huge list. 
 - Customer info
@@ -55,8 +53,7 @@ You can figure what each stands for. There is also a number notifier on the view
 
 ## 4. Confirming Order
 
-<img src="https://github.com/shivyaegis/Flutter_project/assets/103941351/56c916ad-64ce-40e7-b01c-4af7081630b2" width="250" height="600">
-
+<img src="https://github.com/shivyaegis/Nex-Admin-Side-Order-App/assets/103941351/8c205d1d-6089-445e-8a45-d3cb63872a33" width="250" height="600">
 
 
 Order number will be shown which corresponds to the current order number, this updates each time you add something into your order and is in sync with deletion of orders as well. Each order is added individually and removed from the list as it gets added. You can press cancel order which will clear all orders currently given and send you back to 3. Orders.
@@ -64,9 +61,7 @@ Order number will be shown which corresponds to the current order number, this u
 
 ## 5. Order List 
 
-<img src="https://github.com/shivyaegis/Flutter_project/assets/103941351/e4af149d-8986-4705-8f88-ca78ea83be72" width="250" height="600">
-
-
+<img src="https://github.com/shivyaegis/Nex-Admin-Side-Order-App/assets/103941351/d2115bad-47cc-498a-b85b-66e4f25f29ba" width="250" height="600">
 
 You can quickly view the orders for your current customer by pressing Fetch Customer. If not the hint in the text box shows you which customer ID you were placing the order to. Since this is more towards a business sided application, the user (owner/admin presumably) can also see the orders of other customers by fetching customers by their IDs (we have used simple IDs which are integers but improvement can be made on this, another improvement would be using Firebase rules that only let a user that has created a customer to modify records of that customer). 
 
